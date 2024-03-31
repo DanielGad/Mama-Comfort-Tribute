@@ -10,13 +10,11 @@ const App = () => {
   const [tributes, setTributes] = useState([]);
 
   const addTribute = (body, author) => {
-    // Add logic to add the new tribute to the list
     const newTribute = { body, author };
     setTributes([...tributes, newTribute]);
-    return Promise.resolve(); // Return a resolved promise for now
+    return Promise.resolve(); 
   };
   const handleSubmitted = () => {
-    // Navigate back to the home page
     window.location.href = '/';
   };
 

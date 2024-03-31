@@ -48,7 +48,9 @@ const Gallery = () => {
         .then((url) => {
           setImageUrls((prevUrls) => [...prevUrls, url]);
           setUploadMessage("Image uploaded successfully!");
-
+          setTimeout(() => {
+            window.location.href = '/gallery';
+          }, 2000);
         })
         .catch((error) => {
           console.error("Error getting download URL:", error);
@@ -62,7 +64,10 @@ const Gallery = () => {
     setTimeout(() => {
       setIsClickedd(false);
     }, 300);
+
   };
+
+  
 
   useEffect(() => {
     listAll(imagesListRef)
