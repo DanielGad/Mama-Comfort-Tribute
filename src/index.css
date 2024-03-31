@@ -1,0 +1,253 @@
+@media screen and (max-width: 500px) {
+
+  body {
+    margin: auto;
+  }
+  .top img {
+    width: 100%;
+  }
+
+  .gallery {
+    margin-top: 100px;
+  }
+}
+
+body {
+  background-color: aliceblue;
+  height: 1000px;
+}
+
+.carousel {
+  padding-top: 20px;
+  width: 70%;
+  margin: auto;
+  text-align: center;
+}
+
+.Tribute {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.tribute-body {
+  background-color: aliceblue;
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 20px;
+  position: relative;
+  margin-top: 70px;
+}
+
+.top h1 {
+  font-size: 45px;
+  margin: 0;
+  margin-top: -10px;
+  text-align: center;
+}
+
+.top img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.name {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  background-color: rgb(31, 26, 44);
+  font-family: Roboto;
+  font-weight: 500;
+  bottom: 0;
+  color: white;
+  padding: 5px 0;
+  border-radius: 20px;
+}
+
+.name1 {
+  font-size: 30px;
+}
+
+.name2, .name3 {
+  font-size: 30px;
+  font-weight: 900;
+}
+
+
+
+.tributes h1 {
+  font-size: 40px;
+}
+
+.tri {
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
+  font-size: medium;
+  margin: 10px 0;
+  font-family: Roboto;
+  text-justify: auto;
+  line-height: 25px;
+  text-align: center;
+}
+
+.tri-cover img {
+  margin-bottom: -10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.tri-cover {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  margin: auto;
+}
+
+.tri-name {
+  margin-top: 10px;
+  /* text-align: right; */
+  font-size: large;
+  font-weight: 700;
+  color: rgb(13, 0, 46);
+}
+
+.age {
+  position: absolute;
+  background-color: rgb(31, 26, 44);
+  width: 15%;
+  border-radius: 50%;
+  font-size: 20px;
+  right: 8%;
+  top: 20%;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-family: Roboto;
+}
+
+.copy {
+  background-color: aliceblue;
+  color: black;
+  padding: 20px 0;
+  text-align: center;
+  font-family: roboto;
+}
+
+.menu {
+  position: fixed;
+  background-color: rgb(31, 26, 44);
+  z-index: 15;
+  width: 85%;
+  padding: 15px 30px;
+  padding-top: 70px;
+  color: aliceblue;
+  text-align: right;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -50%);
+}
+
+.menu button {
+  text-decoration: none;
+  padding: 10px 15px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: aliceblue;
+  cursor: pointer;
+}
+
+.first-button {
+  padding: 10px 25px;
+  background-color: aliceblue;
+  font-size: large;
+  border-radius: 20px;
+  cursor: pointer;
+  border: none;
+}
+
+.head {
+  font-size: 35px;
+  text-align: center;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  right: 5%;
+  border-radius: 20px;
+}
+
+.menu:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content button {
+  width: 100%;
+  padding: 20px 10px;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.dropdown-content button:hover {
+  background-color: rgb(81,103,151);
+}
+
+
+@media screen and (min-width: 959px) {
+  .tribute-body {
+    width: 60%;
+    background-color: aliceblue;
+  }
+
+  .tri {
+    background-color: aliceblue;
+    line-height: 25px;
+  }
+
+  body {
+    background-color: white;
+  }
+
+  .add-image {
+    padding: 1% 5%;
+  }
+
+  .tri-cover img {
+    margin-bottom: -10px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  .tri-cover {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    margin: auto;
+  }
+
+}
+
+@media screen and (max-width: 709px) {
+  .age {
+    border-radius: 80%;
+    padding: 10px 25px;
+    right: 0;
+  }
+
+  .gallery {
+    width: 80%;
+  }
+}

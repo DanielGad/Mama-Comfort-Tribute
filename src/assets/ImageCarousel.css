@@ -1,0 +1,27 @@
+.image-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); 
+  z-index: 1000; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-fullscreen img {
+  max-width: 90%; 
+  max-height: 90%;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-weight: 500;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
