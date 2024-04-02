@@ -8,9 +8,12 @@ export const GalleryContext = createContext();
 
 export const GalleryProvider = ({ children }) => {
   const [imageUpload, setImageUpload] = useState(null);
+  const [imageProfile, setImageProfile] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
+  const [imageProUrls, setImageProUrls] = useState([]);
   const [uploadMessage, setUploadMessage] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
+  const [imageProPreview, setImageProPreview] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [Data, setData] = useState({img: '', i: 0});
   const [isClicked, setIsClicked] = useState(false);
@@ -31,6 +34,22 @@ export const GalleryProvider = ({ children }) => {
     const reader = new FileReader();
     reader.onload = () => {
       setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleProfileUpload = (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+      alert('Kindly select the file you want to upload!');
+      return;
+    }
+
+    setImageProfile(file);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImageProPreview(reader.result);
     };
     reader.readAsDataURL(file);
   };
@@ -65,6 +84,29 @@ export const GalleryProvider = ({ children }) => {
     setTimeout(() => {
       setIsClickedd(false);
     }, 300);
+
+  };
+
+  const uploadProfileFile = () => {
+    if (imageProfile == null) {
+      alert("Please select a Profile picture to upload.");
+      return;
+    }
+    const fileName = `${uuidv4()}_${imageProfile.name}`;
+    const imageRef = ref(storage, `Tribute-profile/${fileName}`);
+    uploadBytes(imageRef, imageProfile).then((snapshot) => {
+      getDownloadURL(snapshot.ref)
+        .then((url) => {
+          setImageProUrls((prevUrls) => [...prevUrls, url]);
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 2000);
+        })
+        .catch((error) => {
+          console.error("Error getting download URL:", error);
+          setUploadMessage("Error uploading file. Please try again.");
+        })
+    });
 
   };
 
@@ -121,7 +163,7 @@ export const GalleryProvider = ({ children }) => {
   }
 
   return (
-    <GalleryContext.Provider value={{ imageUrls, uploadMessage, imagePreview, uploading, isClicked, isClickedd, Data, isOpen, handleImageUpload, uploadFile, viewImage, imgAction, togglePopdown, togglePopup }}>
+    <GalleryContext.Provider value={{ imageUrls, uploadMessage, imagePreview, uploading, isClicked, imageProUrls, imageProPreview, isClickedd, Data, isOpen, handleImageUpload, handleProfileUpload, uploadProfileFile, uploadFile, viewImage, imgAction, togglePopdown, togglePopup }}>
       {children}
     </GalleryContext.Provider>
   );

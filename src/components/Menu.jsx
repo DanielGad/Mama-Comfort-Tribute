@@ -6,9 +6,9 @@ const Menu = () => {
   return (
 
     <div className='menu'>
-      <Link to="/"><button>Home</button></Link>
-      <Link to="/tribute-form"><button>Add Tribute</button></Link>
-      <Link to="/gallery"><button>Gallery</button></Link>
+      <Link to="/" style={{ textDecoration: 'none' }}><div className='menu-button'>Home</div></Link>
+      <Link to="/tribute-form" style={{ textDecoration: 'none' }}><div className='menu-button'>Add Tribute</div></Link>
+      <Link to="/gallery" style={{ textDecoration: 'none' }}><div className='menu-button'>Gallery</div></Link>
     </div>
   );
 };

@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import '../assets/tributeform.css';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc, onSnapshot } from 'firebase/firestore';
+import { useContext } from 'react';
+import { GalleryContext } from './GalleryContext';
 
 const database = getFirestore();
 const collectionRef = collection(database, 'tributes');
@@ -21,6 +23,7 @@ initializeApp(firebaseConfig);
 
 // eslint-disable-next-line react/prop-types
 const TributeForm = ({ onSubmitted }) => {
+  const { imageProPreview, handleProfileUpload, uploadProfileFile } = useContext(GalleryContext)
   const [, setTributes] = useState([]);
 
   useEffect(() => {
@@ -61,11 +64,16 @@ const TributeForm = ({ onSubmitted }) => {
     <div>
       <form className="tribute-form" onSubmit={handleSubmit}>
       <div className='head'>Add a Tribute</div>
-      <label htmlFor="body">Body:</label>
+      <label htmlFor="body">Tribute:</label>
       <textarea id="body" name="body" rows="4" required />
       <label htmlFor="author">Name:</label>
       <input type="text" id="author" name="author" required />
-      <button type="submit">Add Tribute</button>
+      <label htmlFor="file">Profile Image:</label>
+      <input type="file" onChange={handleProfileUpload}/>
+      <div className="image-preview">
+          {imageProPreview && <img src={imageProPreview} alt="Preview" className="image-preview" width="50%" />}
+        </div>
+      <button type="submit" onClick={uploadProfileFile}>Add Tribute</button>
     </form>
     </div>
   );

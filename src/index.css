@@ -77,8 +77,6 @@ body {
   font-weight: 900;
 }
 
-
-
 .tributes h1 {
   font-size: 40px;
 }
@@ -143,6 +141,7 @@ body {
 .menu {
   position: fixed;
   background-color: rgb(31, 26, 44);
+  display: flex;
   z-index: 15;
   width: 85%;
   padding: 15px 30px;
@@ -152,16 +151,24 @@ body {
   left: 50%;
   top: 0;
   transform: translate(-50%, -50%);
+  border-radius: 20px;
+  justify-content: flex-end;
 }
 
-.menu button {
+.menu-button {
   text-decoration: none;
   padding: 10px 15px;
-  margin-left: 10px;
+
   border: none;
   border-radius: 10px;
-  background-color: aliceblue;
+  font-family: Roboto;
   cursor: pointer;
+  color: white;
+}
+
+.menu-button:hover {
+  background-color: aliceblue;
+  color: rgb(31, 26, 44);
 }
 
 .first-button {

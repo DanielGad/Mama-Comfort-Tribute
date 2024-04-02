@@ -28,7 +28,7 @@ const collectionRef = collection(database, 'tributes');
 
 
 const TributeBody = () => {
-  const { imageUrls } = useContext(GalleryContext);
+  const { imageUrls, imageProUrls } = useContext(GalleryContext);
 
   const [tributes, setTributes] = useState([]);
 
@@ -121,9 +121,16 @@ const TributeBody = () => {
         {tributes.map((tribute) => (
           <div className="tri" key={tribute.id}>
             <div className='tri-cover'>
-                <img src="m1.png" alt="image"/>
+            {imageProUrls.map((image, i) => (
+                        <img
+                            key={i}
+                            src={image}
+                            style={{width: "100%", display: "block", cursor: "pointer"}}
+                            alt=""
+                        />  
+                    ))}
               </div>
-            <p>{tribute.body}</p>
+            <div className='tri-body'>{tribute.body}</div>
               <div className='tri-name'>{tribute.author}</div>
           </div>
         ))}
