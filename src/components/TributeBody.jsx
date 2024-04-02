@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { GalleryContext } from './GalleryContext';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -9,14 +10,6 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../assets/ImageCarousel.css';
-import image1 from '../assets/images/m1.png';
-import image2 from '../assets/images/25.jpg';
-import image3 from '../assets/images/1.jpg';
-import image4 from '../assets/images/2.jpg';
-import image5 from '../assets/images/3.jpg';
-import image6 from '../assets/images/4.jpg';
-import image7 from '../assets/images/5.jpg';
-import image8 from '../assets/images/6.jpg';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDRLlw_PFraCbmGbIpq5Epq2HFozS35OMo",
@@ -35,6 +28,7 @@ const collectionRef = collection(database, 'tributes');
 
 
 const TributeBody = () => {
+  const { imageUrls } = useContext(GalleryContext);
 
   const [tributes, setTributes] = useState([]);
 
@@ -50,13 +44,11 @@ const TributeBody = () => {
     return () => unsubscribe();
   }, []);
 
-  const images = [image1, image2, image3, image4, image5, image6, image7, image8];
-
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: images.length > 1 ? 3 : 1,
+    slidesToShow: imageUrls.length > 1 ? 3 : 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 1500,
@@ -107,7 +99,7 @@ const TributeBody = () => {
       <div className='carousel'>
         <h1>PHOTO SPEAKS</h1>
         <Slider {...settings}>
-          {images.map((imageUrl, index) => (
+          {imageUrls.map((imageUrl, index) => (
             <img key={index} src={imageUrl} alt={`Image ${index + 1}`} onClick={() => handleImageClick(imageUrl)} />
           ))}
         </Slider>
