@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "firebase": "^10.10.0",
-    "react": "^17.0.2",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-image-lightbox": "^5.1.4",
     "react-responsive-masonry": "^2.2.0",
