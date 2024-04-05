@@ -12,7 +12,6 @@ const collectionRef = collection(database, 'Tribute');
 const TributeForm = ({ onSubmitted }) => {
   const { imageProPreview, handleProfileUpload, uploadProfileFile, imageProUrls } = useContext(GalleryContext)
   const [, setTributes] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
@@ -31,28 +30,28 @@ const TributeForm = ({ onSubmitted }) => {
   };
 
   const handleSubmit = async (e) => {
-    const confirmed = window.confirm('Are you sure you want to submit this tribute?');
-  if (!confirmed) {
-    return;
-  }
-  setLoading(true);
-  e.preventDefault();
+    e.preventDefault();
   
-  const imgUrl = await uploadProfileFile();
-  const body = e.target.body.value;
-  const author = e.target.author.value;
+    try {
+      await uploadProfileFile();
+      const imgUrl = imageProUrls;
+      const body = e.target.body.value;
+      const author = e.target.author.value;
+  
+      const confirmed = window.confirm('Are you sure you want to submit this tribute?');
+      if (!confirmed) {
+        return;
+      }
+  
+      await addTribute(body, author, imgUrl);
+      alert('Tribute Submitted Successfully!');
+      onSubmitted();
+    } catch (error) {
+      console.error('Error adding tribute: ', error);
+    }
+  };
+  
 
-  try {
-    await addTribute(body, author, imgUrl);
-    alert('Tribute Submitted Successfully!');
-    onSubmitted();
-  } catch (error) {
-    console.error('Error adding tribute: ', error);
-  } finally {
-    setLoading(false);
-  }
-};
-  
   return (
     <div>
       <form className="tribute-form" onSubmit={handleSubmit}>
@@ -66,9 +65,8 @@ const TributeForm = ({ onSubmitted }) => {
       <div className="image-preview">
           {imageProPreview && <img src={imageProPreview} alt="Preview" className="image-preview" width="50%" />}
         </div>
-      <button type="submit" disabled={loading}>
-        {loading ? 'Uploading...' : 'Add Tribute'}
-      </button>
+        {/* <button onClick={uploadProfileFile}>Upload Profile</button> */}
+      <button type="submit" onClick={uploadProfileFile}>Add Tribute</button>
     </form>
     </div>
   );
@@ -79,4 +77,3 @@ TributeForm.propTypes = {
 };
 
 export default TributeForm;
-

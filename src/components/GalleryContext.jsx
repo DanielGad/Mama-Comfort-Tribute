@@ -10,7 +10,7 @@ export const GalleryProvider = ({ children }) => {
   const [imageUpload, setImageUpload] = useState(null);
   const [imageProfile, setImageProfile] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
-  const [imageProUrls, setImageProUrls] = useState([]);
+  const [imageProUrls, setImageProUrls] = useState('');
   const [uploadMessage, setUploadMessage] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const [imageProPreview, setImageProPreview] = useState(null);
@@ -21,6 +21,8 @@ export const GalleryProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const imagesListRef = ref(storage, "Tribute-images/");
+
+  const imagesProListRef = ref(storage, "Tribute-profile/");
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -87,36 +89,60 @@ export const GalleryProvider = ({ children }) => {
 
   };
 
-  const uploadProfileFile = () => {
-    if (imageProfile == null) {
-      alert("Please select a Profile picture to upload.");
-      return;
+  
+
+  const uploadProfileFile = async () => {
+    try {
+      let imgUrl = 'https://firebasestorage.googleapis.com/v0/b/mama-comfort-tribute.appspot.com/o/Tribute-images%2Ff434fb28-899a-4b6a-859b-7d492826dbad_m1.png?alt=media&token=e54f23fb-75ce-411c-8114-a0980c9601ce'; // Default image URL
+  
+      if (imageProfile != null) {
+        const fileName = `${uuidv4()}_${imageProfile.name}`;
+        const imageRef = ref(storage, `Tribute-profile/${fileName}`);
+        await uploadBytes(imageRef, imageProfile);
+        imgUrl = await getDownloadURL(imageRef);
+      }
+  
+      setImageProUrls(imgUrl);
+      return imgUrl;
+    } catch (error) {
+      console.error('Error uploading profile image:', error);
+      // Handle error
+      return null;
     }
-    const fileName = `${uuidv4()}_${imageProfile.name}`;
-    const imageRef = ref(storage, `Tribute-profile/${fileName}`);
-    uploadBytes(imageRef, imageProfile).then((snapshot) => {
-      getDownloadURL(snapshot.ref)
-        .then((url) => {
-          setImageProUrls((prevUrls) => [...prevUrls, url]);
-          setTimeout(() => {
-            window.location.href = '/';
-          }, 2000);
-        })
-        .catch((error) => {
-          console.error("Error getting download URL:", error);
-          setUploadMessage("Error uploading file. Please try again.");
-        })
-    });
-
   };
+  
+  
 
+  useEffect(() => {
+    listAll(imagesProListRef)
+      .then((response) => {
+        Promise.all(response.items.map((item) => {
+            return getDownloadURL(item);
+          }))
+          .then((urls) => {
+            console.log("Download URLs:", urls);
+            setImageProUrls(urls);
+            console.log(urls);
+          })
+          .catch((error) => {
+            console.error("Error getting download URLs:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("Error listing images:", error);
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   
 
   useEffect(() => {
     listAll(imagesListRef)
       .then((response) => {
-        Promise.all(response.items.map((item) => getDownloadURL(item)))
+        Promise.all(response.items.map((item) => {
+            return getDownloadURL(item);
+          }))
           .then((urls) => {
+            console.log("Download URLs:", urls);
             setImageUrls(urls);
           })
           .catch((error) => {
@@ -126,7 +152,12 @@ export const GalleryProvider = ({ children }) => {
       .catch((error) => {
         console.error("Error listing images:", error);
       });
-  }, [imagesListRef]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
+  
+  
+  
 
   const viewImage = (img, i) => {
     setData({img, i})

@@ -7,6 +7,7 @@ import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 const Gallery = () => {
   const { imageUrls, uploadMessage, imagePreview, uploading, isClicked, isClickedd, Data, isOpen, handleImageUpload, uploadFile, viewImage, imgAction, togglePopdown, togglePopup } = useContext(GalleryContext);
 
+
   return (
     <>
     {
@@ -57,7 +58,7 @@ const Gallery = () => {
                         <img
                             key={i}
                             src={image}
-                            style={{width: "100%", display: "block", cursor: "pointer"}}
+                            style={{width: "100%", display: "block", cursor: "pointer", border: "5px solid rgb(31, 26, 44)", borderRadius: "20px"}}
                             alt=""
                             onClick={() => viewImage(image, i)}
                         />  

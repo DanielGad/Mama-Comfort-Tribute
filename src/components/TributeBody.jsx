@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
 import { GalleryContext } from './GalleryContext';
-import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
   collection,
@@ -11,24 +10,12 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../assets/ImageCarousel.css';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDRLlw_PFraCbmGbIpq5Epq2HFozS35OMo",
-  authDomain: "mama-comfort-tribute.firebaseapp.com",
-  projectId: "mama-comfort-tribute",
-  storageBucket: "mama-comfort-tribute.appspot.com",
-  messagingSenderId: "47637660416",
-  appId: "1:47637660416:web:6dc4bfaaf2241f1017a9e5",
-  measurementId: "G-4TG99XPJTE"
-};
-
-initializeApp(firebaseConfig);
-
 const database = getFirestore();
-const collectionRef = collection(database, 'tributes');
+const collectionRef = collection(database, 'Tribute');
 
 
 const TributeBody = () => {
-  const { imageUrls, /*imageProUrls*/ } = useContext(GalleryContext);
+  const { imageUrls } = useContext(GalleryContext);
 
   const [tributes, setTributes] = useState([]);
 
@@ -121,14 +108,7 @@ const TributeBody = () => {
         {tributes.map((tribute) => (
           <div className="tri" key={tribute.id}>
             <div className='tri-cover'>
-            {/* {imageProUrls.map((image, i) => (
-                        <img
-                            key={i}
-                            src={image}
-                            alt=""
-                        />  
-                    ))} */}
-                    <img src="/m1.png" alt="" />
+                  <img src={tribute.imgUrl}alt="" />  
               </div>
             <div className='tri-body'>{tribute.body}</div>
               <div className='tri-name'>{tribute.author}</div>
