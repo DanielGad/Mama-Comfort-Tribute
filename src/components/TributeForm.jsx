@@ -4,13 +4,12 @@ import '../assets/tributeform.css';
 import { getFirestore, collection, addDoc, onSnapshot } from 'firebase/firestore';
 import { useContext } from 'react';
 import { GalleryContext } from './GalleryContext';
-
 const database = getFirestore();
 const collectionRef = collection(database, 'Tribute');
 
 // eslint-disable-next-line react/prop-types
 const TributeForm = ({ onSubmitted }) => {
-  const { imageProPreview, handleProfileUpload, uploadProfileFile, imageProUrls } = useContext(GalleryContext)
+  const { imageProPreview, handleProfileUpload, uploadProfileFile, isClickedd, setIsClickedd } = useContext(GalleryContext)
   const [, setTributes] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -37,7 +36,7 @@ const TributeForm = ({ onSubmitted }) => {
   }
   setLoading(true);
   e.preventDefault();
-  
+
   const imgUrl = await uploadProfileFile();
   const body = e.target.body.value;
   const author = e.target.author.value;
@@ -66,7 +65,8 @@ const TributeForm = ({ onSubmitted }) => {
       <div className="image-preview">
           {imageProPreview && <img src={imageProPreview} alt="Preview" className="image-preview" width="50%" />}
         </div>
-      <button type="submit" disabled={loading}>
+      <button type="submit" disabled={loading} className={`add-Tribute ${isClickedd ? 'clicked' : ''}`} 
+      onClick={() => setIsClickedd(true)}>
         {loading ? 'Uploading...' : 'Add Tribute'}
       </button>
     </form>

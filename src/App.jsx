@@ -3,8 +3,8 @@ import Menu from "./components/Menu";
 import TributeBody from "./components/TributeBody";
 import TributeForm from "./components/TributeForm";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ScrollToTopOnRefresh from './components/ScrollToTopOnRefresh';
 import Gallery from './components/Gallery';
+import ScrollToTop from './components/ScrollToTop';
 
 const App = () => {
   const [tributes, setTributes] = useState([]);
@@ -21,8 +21,8 @@ const App = () => {
   return (
     <Router>
       <div>
+        <ScrollToTop />
         <Menu />
-        <ScrollToTopOnRefresh />
         <Routes>
           <Route path="/" element={<TributeBody />} />
           <Route

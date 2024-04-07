@@ -56,44 +56,76 @@ export const GalleryProvider = ({ children }) => {
     reader.readAsDataURL(file);
   };
 
-  const uploadFile = () => {
-    if (imageUpload == null) {
-      alert("Please select a file to upload.");
-      return;
-    }
-    if (imageUpload == null) return;
-    setUploading(true);
-    const fileName = `${uuidv4()}_${imageUpload.name}`;
-    const imageRef = ref(storage, `Tribute-images/${fileName}`);
-    uploadBytes(imageRef, imageUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref)
-        .then((url) => {
-          setImageUrls((prevUrls) => [...prevUrls, url]);
-          setUploadMessage("Image uploaded successfully!");
-          setTimeout(() => {
-            window.location.href = '/gallery';
-          }, 2000);
-        })
-        .catch((error) => {
-          console.error("Error getting download URL:", error);
-          setUploadMessage("Error uploading file. Please try again.");
-        })
-        .finally(() => {
-          setUploading(false);
-        });
-    });
-    setIsClickedd(true);
-    setTimeout(() => {
-      setIsClickedd(false);
-    }, 300);
+  // const uploadFile = () => {
+  //   if (imageUpload == null) {
+  //     alert("Please select a file to upload.");
+  //     return;
+  //   }
+  //   if (imageUpload == null) return;
+  //   setUploading(true);
+  //   const fileName = `${uuidv4()}_${imageUpload.name}`;
+  //   const imageRef = ref(storage, `Tribute-images/${fileName}`);
+  //   uploadBytes(imageRef, imageUpload).then((snapshot) => {
+  //     getDownloadURL(snapshot.ref)
+  //       .then((url) => {
+  //         setImageUrls((prevUrls) => [...prevUrls, url]);
+  //         setUploadMessage("Image uploaded successfully!");
+  //         setTimeout(() => {
+  //           window.location.href = '/gallery';
+  //         }, 2000);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error getting download URL:", error);
+  //         setUploadMessage("Error uploading file. Please try again.");
+  //       })
+  //       .finally(() => {
+  //         setUploading(false);
+  //       });
+  //   });
+  //   setIsClickedd(true);
+  //   setTimeout(() => {
+  //     setIsClickedd(false);
+  //   }, 300);
+  // };
 
+  const uploadFile = async () => {
+    let imgUrl = ''
+    try {
+      if (imageUpload == null) {
+     alert("Please select a file to upload.");
+     return;
+   }
+
+      if (imageUpload != null) {
+        const fileName = `${uuidv4()}_${imageUpload.name}`;
+        const imageRef = ref(storage, `Tribute-images/${fileName}`);
+        await uploadBytes(imageRef, imageUpload);
+        imgUrl = await getDownloadURL(imageRef);
+      }
+  
+      setImageUrls(imgUrl);
+      setUploadMessage("Image uploaded successfully!");
+      setTimeout(() => {
+        window.location.href = '/gallery';
+      }, 2000);
+      return imgUrl;
+    } catch (error) {
+      console.error('Error uploading profile image:', error);
+      setUploadMessage("Error uploading file. Please try again.");
+        setUploading(false);
+      setIsClickedd(true);
+      setTimeout(() => {
+      setIsClickedd(false);
+  }, 300);
+      return null;
+    }
   };
 
   
 
   const uploadProfileFile = async () => {
     try {
-      let imgUrl = 'https://firebasestorage.googleapis.com/v0/b/mama-comfort-tribute.appspot.com/o/Tribute-images%2Ff434fb28-899a-4b6a-859b-7d492826dbad_m1.png?alt=media&token=e54f23fb-75ce-411c-8114-a0980c9601ce'; // Default image URL
+      let imgUrl = 'https://firebasestorage.googleapis.com/v0/b/mama-comfort-tribute.appspot.com/o/Tribute-profile%2F1074c9f9-5d5a-4793-8c03-f27e2f66cbd7_m1.png?alt=media&token=30725b90-31a2-4723-9d9e-b1b6c3146bfa';
   
       if (imageProfile != null) {
         const fileName = `${uuidv4()}_${imageProfile.name}`;
@@ -106,7 +138,6 @@ export const GalleryProvider = ({ children }) => {
       return imgUrl;
     } catch (error) {
       console.error('Error uploading profile image:', error);
-      // Handle error
       return null;
     }
   };
@@ -120,9 +151,9 @@ export const GalleryProvider = ({ children }) => {
             return getDownloadURL(item);
           }))
           .then((urls) => {
-            console.log("Download URLs:", urls);
+            // console.log("Download URLs:", urls);
             setImageProUrls(urls);
-            console.log(urls);
+            // console.log(urls);
           })
           .catch((error) => {
             console.error("Error getting download URLs:", error);
@@ -142,7 +173,7 @@ export const GalleryProvider = ({ children }) => {
             return getDownloadURL(item);
           }))
           .then((urls) => {
-            console.log("Download URLs:", urls);
+            // console.log("Download URLs:", urls);
             setImageUrls(urls);
           })
           .catch((error) => {
