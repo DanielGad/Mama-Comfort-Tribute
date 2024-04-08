@@ -14,7 +14,6 @@
 
 body {
   background-color: aliceblue;
-  height: 1000px;
 }
 
 .carousel {
@@ -120,11 +119,19 @@ body {
 }
 
 .link-button {
+  padding: 10px 50px;
+  border: none;
+  background-color: rgb(31,26,44);
+  font-family: Roboto;
+  font-size: 15px;
+  cursor: pointer;
+  color: white;
+  border-radius: 10px;
   transition: transform 0.2s;
 }
 
 .link-button:hover {
-  background-color: lightblue;
+  background-color: rgb(46,92,149);
   transform: scale(1.1);
 }
 

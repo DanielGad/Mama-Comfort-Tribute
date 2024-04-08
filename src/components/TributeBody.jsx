@@ -108,16 +108,7 @@ const TributeBody = () => {
             </div>
           ))}
         </Slider>
-        <Link to="/gallery"><button style={{
-          padding: "10px 50px",
-          border: "none",
-          backgroundColor: "rgb(31,26,44)",
-          fontFamily: "roboto",
-          fontSize: "15px",
-          cursor: "pointer",
-          color: "white",
-          borderRadius: "10px"
-        }} className='link-button'>View More Photos</button></Link>
+        <Link to="/gallery"><button className='link-button'>View More Photos</button></Link>
 
       </div>
       
@@ -144,16 +135,7 @@ const TributeBody = () => {
               <div className='tri-name'>{tribute.author} ({tribute.relationship})</div>
           </div>
         ))}
-        <Link to={"/tributes"}><button style={{
-          padding: "10px 50px",
-          border: "none",
-          backgroundColor: "rgb(31,26,44)",
-          fontFamily: "roboto",
-          fontSize: "15px",
-          cursor: "pointer",
-          color: "white",
-          borderRadius: "10px"
-        }} className='link-button'>View More Tributes</button></Link>
+        <Link to={"/tributes"}><button className='link-button'>View More Tributes</button></Link>
       </div>
       <div className="copy">&#169; Gadhub All Right Reserved 2024. </div>
     </div>

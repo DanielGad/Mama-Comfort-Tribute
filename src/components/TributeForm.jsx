@@ -33,6 +33,7 @@ const TributeForm = ({ onSubmitted }) => {
   try {
     await addTribute(body, author, relationship, imgUrl);
     alert('Tribute Submitted Successfully!');
+      window.location.href = '/tributes';
     onSubmitted();
   } catch (error) {
     console.error('Error adding tribute: ', error);

@@ -1,0 +1,20 @@
+body {
+  text-align: center;
+  width: 80%;
+  margin: auto;
+}
+
+.navi {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tributes-page {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.tributes-page h1 {
+  font-size: 40px;
+}
