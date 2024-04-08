@@ -1,11 +1,62 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore';
 import { GalleryContext } from './GalleryContext';
 import '../assets/gallery.css';
 
-import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
+import Masonry, {ResponsiveMasonry} from "react-responsive-masonry";
+const database = getFirestore();
+const collectionRef = collection(database, 'tributes-info');
 
-const Gallery = () => {
-  const { imageUrls, uploadMessage, imagePreview, uploading, isClicked, isClickedd, Data, isOpen, handleImageUpload, uploadFile, viewImage, imgAction, togglePopdown, togglePopup } = useContext(GalleryContext);
+// eslint-disable-next-line react/prop-types
+const Gallery = ({onSubmitted}) => {
+  const { uploadMessage, imagePreview, uploading, isClicked, isClickedd, Data, isOpen, handleImageUpload, uploadFile, viewImage, imgAction, togglePopdown, togglePopup, photoDetails, setPhotoDetails } = useContext(GalleryContext);
+
+  const [galleryDetails, setGalleryDetails] = useState([]);
+
+
+
+  const addGallery = (info, imgUrl) => {
+    return addDoc(collectionRef, {info, imgUrl})
+  };
+
+  const handleSubmit = async (e) => {
+    const confirmed = window.confirm('Are you sure you want to upload this photo?');
+    if (!confirmed) {
+      return;
+    }
+    e.preventDefault();
+  
+    const info = photoDetails;
+    if (info === '') {
+      alert('Pls provide the detail about the photo.')
+      return;
+    }
+    const imgUrl = await uploadFile();
+  
+    if (imgUrl) {
+      try {
+        await addGallery(info, imgUrl);
+        alert('Photo Uploaded Successfully!');
+        onSubmitted();
+      } catch (error) {
+        console.error('Error uploading Photo: ', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const fetchGalleryDetails = async () => {
+      const querySnapshot = await getDocs(collectionRef);
+      const details = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setGalleryDetails(details);
+    };
+    fetchGalleryDetails();
+  }, []);
+  
+  
 
 
   return (
@@ -21,11 +72,23 @@ const Gallery = () => {
             className="choose-button"
           />
       </div>
+      <div className='details'>
+      <div><label htmlFor="info">Details about the Photo:</label></div>
+      <input
+        type="text"
+        id="info"
+        name="info"
+        maxLength={50}
+        required
+        value={photoDetails}
+        onChange={(e) => setPhotoDetails(e.target.value)}
+/>
+      </div>
         <div className="image-preview">
           {imagePreview && <img src={imagePreview} alt="Preview" className="image-preview" width="50%" />}
         </div>
         <div>
-          <button onClick={uploadFile} disabled={uploading} className={`upload-button ${isClickedd ? 'clicked' : ''}`}>
+          <button onClick={handleSubmit} disabled={uploading} className={`upload-button ${isClickedd ? 'clicked' : ''}`}>
             {uploading ? "Uploading..." : "Upload Image"}
           </button>
         </div>
@@ -38,13 +101,13 @@ const Gallery = () => {
     </div>
       </div>
     }
-    <button className={`add-image ${isClicked ? 'clicked' : ''}`} onClick={togglePopdown}>Add Image</button>
+    <button className={`add-image ${isClicked ? 'clicked' : ''}`} onClick={togglePopdown}>Add Photo</button>
     {
       Data.img && <div className="preview">
         <span className=" close-btn close" onClick={() => imgAction()}>&times;</span>
-        <span className="prev" onClick={() => imgAction('prev-img')}>&lt;</span>
+        {/* <span className="prev" onClick={() => imgAction('prev-img')}>&lt;</span> */}
         <img src={Data.img} alt="Image" />
-        <span className="next" onClick={() => imgAction('next-img')}>&gt;</span>
+        {/* <span className="next" onClick={() => imgAction('next-img')}>&gt;</span> */}
       </div>
     }
       <div className="gallery-container">
@@ -54,14 +117,16 @@ const Gallery = () => {
                 columnsCountBreakPoints={{350: 1, 750: 2, 900: 3}}
               >
                 <Masonry gutter="20px">
-                    {imageUrls.map((image, i) => (
-                        <img
-                            key={i}
-                            src={image}
+                    {galleryDetails.map((details) => (
+                      <div key={details.id}>
+                                                <img
+                            src={details.imgUrl}
                             style={{width: "100%", display: "block", cursor: "pointer", border: "5px solid rgb(31, 26, 44)", borderRadius: "20px"}}
                             alt=""
-                            onClick={() => viewImage(image, i)}
+                            onClick={() => viewImage(details.imgUrl, details.i)}
                         />  
+                        <p>{details.info}</p>
+                      </div>
                     ))}
                 </Masonry>
             </ResponsiveMasonry>

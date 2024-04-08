@@ -19,13 +19,48 @@ body {
 
 .carousel {
   padding-top: 20px;
-  width: 70%;
+  width: 80%;
   margin: auto;
   text-align: center;
+  object-fit: cover;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .carousel img {
+  width: 250px;
+  height: 100%;
+  margin-left: 30px;
   cursor: pointer;
+  text-align: center;
+}
+
+.image-fullscreen {
+  display: block;
+  text-align: center;
+}
+
+.image-fullscreen p {
+  bottom: 70px;
+  left: 35%;
+  font-size: 20px;
+  color: white;
+  background-color: rgb(31,26,44);
+  width: 60%;
+  text-align: center;
+  border-radius: 20px;
+  font-family: roboto;
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+}
+
+.carousel p {
+  text-align: center;
+  font-size: large;
+  font-family: roboto;
+
 }
 
 .Tribute {
@@ -216,6 +251,29 @@ body {
 
 
 @media screen and (min-width: 959px) {
+  .image-fullscreen p {
+    position: absolute;
+    bottom: 70px;
+    left: 35%;
+    font-size: 20px;
+    color: white;
+    background-color: rgb(31,26,44);
+    width: 30%;
+    text-align: center;
+    border-radius: 20px;
+    font-family: roboto;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+  }
+
+  .image-fullscreen {
+    display: block;
+    text-align: center;
+    padding-top: 20px;
+  }
+
   .tribute-body {
     width: 60%;
     background-color: aliceblue;

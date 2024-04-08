@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import '../assets/tributeform.css';
-import { getFirestore, collection, addDoc, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, addDoc} from 'firebase/firestore';
 import { useContext } from 'react';
 import { GalleryContext } from './GalleryContext';
 const database = getFirestore();
@@ -10,23 +10,11 @@ const collectionRef = collection(database, 'Tribute');
 // eslint-disable-next-line react/prop-types
 const TributeForm = ({ onSubmitted }) => {
   const { imageProPreview, handleProfileUpload, uploadProfileFile, isClickedd, setIsClickedd } = useContext(GalleryContext)
-  const [, setTributes] = useState([]);
   const [loading, setLoading] = useState(false);
+  
 
-  useEffect(() => {
-    const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
-      const updatedTributes = snapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setTributes(updatedTributes);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const addTribute = (body, author, imgUrl) => {
-    return addDoc(collectionRef, { body, author, imgUrl });
+  const addTribute = (body, author, relationship, imgUrl) => {
+    return addDoc(collectionRef, { body, author, relationship, imgUrl });
   };
 
   const handleSubmit = async (e) => {
@@ -40,9 +28,10 @@ const TributeForm = ({ onSubmitted }) => {
   const imgUrl = await uploadProfileFile();
   const body = e.target.body.value;
   const author = e.target.author.value;
+  const relationship = e.target.relationship.value;
 
   try {
-    await addTribute(body, author, imgUrl);
+    await addTribute(body, author, relationship, imgUrl);
     alert('Tribute Submitted Successfully!');
     onSubmitted();
   } catch (error) {
@@ -59,8 +48,10 @@ const TributeForm = ({ onSubmitted }) => {
       <label htmlFor="body">Tribute:</label>
       <textarea id="body" name="body" rows="4" required />
       <label htmlFor="author">Name:</label>
-      <input type="text" id="author" name="author" required />
-      <label htmlFor="file">Profile Image:</label>
+      <input type="text" id="author" name="author" required/>
+      <label htmlFor="relationship">Relationship with Mama:</label>
+      <input type="text" id="relationship" name="relationship" required maxLength={30}/>
+      <label htmlFor="file">Profile Photo:</label>
       <input type="file" onChange={handleProfileUpload}/>
       <div className="image-preview">
           {imageProPreview && <img src={imageProPreview} alt="Preview" className="image-preview" width="50%" />}

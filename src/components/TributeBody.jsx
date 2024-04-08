@@ -13,11 +13,13 @@ import '../assets/ImageCarousel.css';
 const database = getFirestore();
 const collectionRef = collection(database, 'Tribute');
 
+const collectionReff = collection(database, 'tributes-info')
 
 const TributeBody = () => {
   const { imageUrls } = useContext(GalleryContext);
 
   const [tributes, setTributes] = useState([]);
+  const [tributesImg, setTributesImg] = useState([]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
@@ -26,6 +28,18 @@ const TributeBody = () => {
         id: doc.id,
       }));
       setTributes(updatedTributes);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collectionReff, (snapshot) => {
+      const updatedTributesImg = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setTributesImg(updatedTributesImg);
     });
 
     return () => unsubscribe();
@@ -51,8 +65,8 @@ const TributeBody = () => {
 
     const [fullscreenImage, setFullscreenImage] = useState(null);
   
-    const handleImageClick = (image) => {
-      setFullscreenImage(image);
+    const handleImageClick = (image, text) => {
+      setFullscreenImage({ image, text });
     };
   
     const handleCloseFullscreen = () => {
@@ -86,32 +100,37 @@ const TributeBody = () => {
       <div className='carousel'>
         <h1>PHOTO SPEAKS</h1>
         <Slider {...settings}>
-          {imageUrls.map((imageUrl, index) => (
-            <img key={index} src={imageUrl} alt={`Image ${index + 1}`} onClick={() => handleImageClick(imageUrl)} />
+          {tributesImg.slice(0, 4).map((pics, index) => (
+            <div key={index}>
+              <img src={pics.imgUrl} alt={`Image ${index + 1}`} onClick={() => handleImageClick(pics.imgUrl, pics.info)} />
+              <p>{pics.info}</p>
+            </div>
           ))}
         </Slider>
 
       </div>
       
 
-      {fullscreenImage && (
-        <div className="image-fullscreen" onClick={handleCloseFullscreen}>
-          <img src={fullscreenImage} alt="Fullscreen Image" />
-          <span className="close-btn" onClick={handleCloseFullscreen}>
-            &times;
-          </span>
-        </div>
-      )}
+          {fullscreenImage && (
+      <div className="image-fullscreen" onClick={handleCloseFullscreen}>
+        <img src={fullscreenImage.image} alt="Fullscreen Image" />
+        <br />
+        <p>{fullscreenImage.text}</p>
+        <span className="close-btn" onClick={handleCloseFullscreen}>
+          &times;
+        </span>
+      </div>
+        )} 
 
 <div className="tributes">
         <h1 style={{textAlign: "center", paddingTop: "20px"}}>Tributes</h1>
-        {tributes.map((tribute) => (
+        {tributes.slice(0, 6).map((tribute) => (
           <div className="tri" key={tribute.id}>
             <div className='tri-cover'>
                   <img src={tribute.imgUrl}alt="" />  
               </div>
             <div className='tri-body'>{tribute.body}</div>
-              <div className='tri-name'>{tribute.author}</div>
+              <div className='tri-name'>{tribute.author} ({tribute.relationship})</div>
           </div>
         ))}
       </div>

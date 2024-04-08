@@ -19,6 +19,7 @@ export const GalleryProvider = ({ children }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isClickedd, setIsClickedd] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [photoDetails, setPhotoDetails] = useState("");
 
   const imagesListRef = ref(storage, "Tribute-images/");
 
@@ -89,37 +90,39 @@ export const GalleryProvider = ({ children }) => {
   // };
 
   const uploadFile = async () => {
-    let imgUrl = ''
     try {
       if (imageUpload == null) {
-     alert("Please select a file to upload.");
-     return;
-   }
-
+        alert('Please select a photo to upload!');
+        return null;
+      }
+      let imgUrl;
+  
       if (imageUpload != null) {
+        setUploading(true);
         const fileName = `${uuidv4()}_${imageUpload.name}`;
         const imageRef = ref(storage, `Tribute-images/${fileName}`);
         await uploadBytes(imageRef, imageUpload);
         imgUrl = await getDownloadURL(imageRef);
       }
-  
-      setImageUrls(imgUrl);
       setUploadMessage("Image uploaded successfully!");
       setTimeout(() => {
         window.location.href = '/gallery';
-      }, 2000);
+     }, 2000);
+     setImageUrls((prevUrls) => [...prevUrls, imgUrl])
       return imgUrl;
     } catch (error) {
       console.error('Error uploading profile image:', error);
       setUploadMessage("Error uploading file. Please try again.");
-        setUploading(false);
-      setIsClickedd(true);
-      setTimeout(() => {
-      setIsClickedd(false);
-  }, 300);
       return null;
+    } finally {
+      setUploading(false); 
+      setIsClickedd(true); 
+      setTimeout(() => {
+        setIsClickedd(false); 
+      }, 300);
     }
   };
+
 
   
 
@@ -222,10 +225,11 @@ export const GalleryProvider = ({ children }) => {
     setUploadMessage(null)
     setImagePreview(null);
     setImageUpload(null)
+    setPhotoDetails(null)
   }
 
   return (
-    <GalleryContext.Provider value={{ imageUrls, uploadMessage, imagePreview, uploading, isClicked, imageProUrls, imageProPreview, isClickedd, Data, isOpen, handleImageUpload, handleProfileUpload, uploadProfileFile, uploadFile, viewImage, imgAction, togglePopdown, togglePopup }}>
+    <GalleryContext.Provider value={{ imageUrls, uploadMessage, imagePreview, uploading, isClicked, imageProUrls, imageProPreview, isClickedd, Data, isOpen, photoDetails, setPhotoDetails, handleImageUpload, handleProfileUpload, uploadProfileFile, uploadFile, viewImage, imgAction, togglePopdown, togglePopup }}>
       {children}
     </GalleryContext.Provider>
   );
