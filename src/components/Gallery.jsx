@@ -103,7 +103,7 @@ const Gallery = ({onSubmitted}) => {
     }
     <button className={`add-image ${isClicked ? 'clicked' : ''}`} onClick={togglePopdown}>Add Photo</button>
     {
-      Data.img && <div className="preview">
+      Data.img && <div className="preview" onClick={() => imgAction()}>
         <span className=" close-btn close" onClick={() => imgAction()}>&times;</span>
         {/* <span className="prev" onClick={() => imgAction('prev-img')}>&lt;</span> */}
         <img src={Data.img} alt="Image" />
