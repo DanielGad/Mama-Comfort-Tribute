@@ -20,17 +20,9 @@ const Gallery = ({onSubmitted}) => {
   };
 
   const handleSubmit = async (e) => {
-    const confirmed = window.confirm('Are you sure you want to upload this photo?');
-    if (!confirmed) {
-      return;
-    }
     e.preventDefault();
   
     const info = photoDetails;
-    if (info === '') {
-      alert('Pls provide the detail about the photo.')
-      return;
-    }
     const imgUrl = await uploadFile();
   
     if (imgUrl) {

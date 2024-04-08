@@ -112,6 +112,9 @@ body {
   font-weight: 900;
 }
 
+.tributes {
+  text-align: center;
+}
 .tributes h1 {
   font-size: 40px;
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { GalleryContext } from './GalleryContext';
 import {
   getFirestore,
@@ -46,7 +47,7 @@ const TributeBody = () => {
   }, []);
 
   const settings = {
-    dots: true,
+    // dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: imageUrls.length > 1 ? 3 : 1,
@@ -107,6 +108,16 @@ const TributeBody = () => {
             </div>
           ))}
         </Slider>
+        <Link to="/gallery"><button style={{
+          padding: "10px 50px",
+          border: "none",
+          backgroundColor: "rgb(31,26,44)",
+          fontFamily: "roboto",
+          fontSize: "15px",
+          cursor: "pointer",
+          color: "white",
+          borderRadius: "10px"
+        }}>View More Photos</button></Link>
 
       </div>
       
@@ -133,6 +144,16 @@ const TributeBody = () => {
               <div className='tri-name'>{tribute.author} ({tribute.relationship})</div>
           </div>
         ))}
+        <Link to={"/tributes"}><button style={{
+          padding: "10px 50px",
+          border: "none",
+          backgroundColor: "rgb(31,26,44)",
+          fontFamily: "roboto",
+          fontSize: "15px",
+          cursor: "pointer",
+          color: "white",
+          borderRadius: "10px"
+        }}>View More Tributes</button></Link>
       </div>
       <div className="copy">&#169; Gadhub All Right Reserved 2024. </div>
     </div>

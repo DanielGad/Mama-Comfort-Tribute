@@ -95,6 +95,14 @@ export const GalleryProvider = ({ children }) => {
         alert('Please select a photo to upload!');
         return null;
       }
+      if (photoDetails === null) {
+        alert('Pls provide the detail about the photo.')
+        return
+      }
+      const confirmed = window.confirm('Are you sure you want to upload this photo?');
+      if (!confirmed) {
+        return;
+      }
       let imgUrl;
   
       if (imageUpload != null) {
