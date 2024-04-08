@@ -119,6 +119,15 @@ body {
   font-size: 40px;
 }
 
+.link-button {
+  transition: transform 0.2s;
+}
+
+.link-button:hover {
+  background-color: lightblue;
+  transform: scale(1.1);
+}
+
 .tri {
   background-color: white;
   padding: 20px;

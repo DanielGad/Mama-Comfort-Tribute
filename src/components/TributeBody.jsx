@@ -117,7 +117,7 @@ const TributeBody = () => {
           cursor: "pointer",
           color: "white",
           borderRadius: "10px"
-        }}>View More Photos</button></Link>
+        }} className='link-button'>View More Photos</button></Link>
 
       </div>
       
@@ -153,7 +153,7 @@ const TributeBody = () => {
           cursor: "pointer",
           color: "white",
           borderRadius: "10px"
-        }}>View More Tributes</button></Link>
+        }} className='link-button'>View More Tributes</button></Link>
       </div>
       <div className="copy">&#169; Gadhub All Right Reserved 2024. </div>
     </div>
