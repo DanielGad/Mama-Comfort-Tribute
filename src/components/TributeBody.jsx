@@ -102,7 +102,7 @@ const TributeBody = () => {
         <h1>PHOTO SPEAKS</h1>
         <Slider {...settings}>
           {tributesImg.slice(0, 4).map((pics, index) => (
-            <div key={index}>
+            <div key={index} className='car-con'>
               <img src={pics.imgUrl} alt={`Image ${index + 1}`} onClick={() => handleImageClick(pics.imgUrl, pics.info)} />
               <p>{pics.info}</p>
             </div>
@@ -131,15 +131,16 @@ const TributeBody = () => {
             <div className='tri-cover'>
                   <img src={tribute.imgUrl}alt="" />  
               </div>
+            <div>
             <div className='tri-body'>{tribute.body}</div>
               <div className='tri-name'>{tribute.author} ({tribute.relationship})</div>
+            </div>
           </div>
         ))}
         <Link to={"/tributes"}><button className='link-button'>View More Tributes</button></Link>
       </div>
       <div className="copy">&#169; Gadhub All Right Reserved 2024. </div>
     </div>
-    
     </>
   )
 }

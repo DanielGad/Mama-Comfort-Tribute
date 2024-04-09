@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { GalleryContext } from './GalleryContext';
 import '../assets/gallery.css';
+import LazyLoad from 'react-lazyload';
 
 import Masonry, {ResponsiveMasonry} from "react-responsive-masonry";
 const database = getFirestore();
@@ -56,18 +57,29 @@ const Gallery = () => {
                 columnsCountBreakPoints={{350: 1, 750: 2, 900: 3}}
               >
                 <Masonry gutter="20px">
-                    {galleryDetails.slice(startIndex, endIndex).map((details) => (
-                      <div key={details.id}>
-                        <img
-                            src={details.imgUrl}
-                            style={{width: "100%", display: "block", cursor: "pointer", border: "5px solid rgb(31, 26, 44)", borderRadius: "20px"}}
-                            alt=""
-                            onClick={() => viewImage(details.imgUrl, details.i)}
-                        />  
-                        <p>{details.info}</p>
-                      </div>
-                    ))}
-                </Masonry>
+  {galleryDetails.slice(startIndex, endIndex).map((details) => (
+    <LazyLoad key={details.id} height={200} offset={100}>
+      <div>
+        <img
+          src={details.imgUrl}
+          data-src="/istock.jpg"
+          style={{
+            width: "100%",
+            display: "block",
+            cursor: "pointer",
+            border: "5px solid rgb(31, 26, 44)",
+            borderRadius: "20px"
+          }}
+          alt=""
+          onClick={() => viewImage(details.imgUrl, details.i)}
+          loading="lazy"
+          className="lazyload"
+        />
+        <p>{details.info}</p>
+      </div>
+    </LazyLoad>
+  ))}
+</Masonry>
             </ResponsiveMasonry>
       </div>
 

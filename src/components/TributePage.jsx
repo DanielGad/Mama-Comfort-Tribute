@@ -45,8 +45,10 @@ const TributePage = () => {
             <div className='tri-cover'>
               <img src={tribute.imgUrl} alt="" />
             </div>
+            <div>
             <div className='tri-body'>{tribute.body}</div>
             <div className='tri-name'>{tribute.author} ({tribute.relationship})</div>
+            </div>
           </div>
         ))}
       </div>
