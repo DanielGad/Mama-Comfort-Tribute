@@ -326,6 +326,11 @@ body {
     margin: auto;
   }
 
+  .closee {
+    top: 60px;
+    right: 70px;
+  }
+
 }
 
 @media screen and (max-width: 709px) {

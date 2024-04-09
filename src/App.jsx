@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Gallery from './components/Gallery';
 import ScrollToTop from './components/ScrollToTop';
 import TributePage from './components/TributePage';
+import GalleryForm from "./components/GalleryForm";
 
 const App = () => {
 
@@ -19,6 +20,7 @@ const App = () => {
             path="/tribute-form" element={<TributeForm />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/tributes" element={<TributePage />} />
+          <Route path="/add-gallery" element={<GalleryForm />} />
         </Routes>
       </div>
     </Router>

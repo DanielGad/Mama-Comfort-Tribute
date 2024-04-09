@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../assets/tributeform.css';
 import { getFirestore, collection, addDoc} from 'firebase/firestore';
 import { useContext } from 'react';
@@ -44,6 +44,9 @@ const TributeForm = ({ onSubmitted }) => {
   
   return (
     <div>
+      <Link to={"/tributes"}><span className="close-btn closee">
+            &times;
+          </span></Link>
       <form className="tribute-form" onSubmit={handleSubmit}>
       <div className='head'>Add a Tribute</div>
       <label htmlFor="body">Tribute:</label>
@@ -64,10 +67,6 @@ const TributeForm = ({ onSubmitted }) => {
     </form>
     </div>
   );
-};
-
-TributeForm.propTypes = {
-  addTribute: PropTypes.func.isRequired,
 };
 
 export default TributeForm;

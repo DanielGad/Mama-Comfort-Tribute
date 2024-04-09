@@ -1,15 +1,22 @@
 body {
   text-align: center;
-  width: 80%;
   margin: auto;
 }
 
 .navi {
+  width: 90%;
+  margin: auto;
   display: flex;
   justify-content: space-between;
 }
 
+.navi button {
+  margin-bottom: 20px;
+}
+
 .tributes-page {
+  width: 90%;
+  margin: auto;
   margin-top: 50px;
   margin-bottom: 50px;
   text-align: center;

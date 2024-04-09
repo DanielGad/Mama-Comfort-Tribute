@@ -12,6 +12,8 @@ export const GalleryProvider = ({ children }) => {
   const [imageUrls, setImageUrls] = useState([]);
   const [imageProUrls, setImageProUrls] = useState('');
   const [uploadMessage, setUploadMessage] = useState("");
+  const [detailsMessage, setDetailsMessage] = useState("");
+  const [detailsMessagess, setDetailsMessagess] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const [imageProPreview, setImageProPreview] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -90,15 +92,22 @@ export const GalleryProvider = ({ children }) => {
   // };
 
   const uploadFile = async () => {
+    setPhotoDetails("")
     try {
       if (imageUpload == null) {
-        alert('Please select a photo to upload!');
+        setDetailsMessagess('Select a photo to upload!');
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        setDetailsMessagess(null);
         return null;
       }
-      if (photoDetails === null) {
-        alert('Pls provide the detail about the photo.')
-        return
+
+      if (!photoDetails) {
+        setDetailsMessage('Kindly provide details about the photo.');
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        setDetailsMessage(null);
+        return null;
       }
+      
       const confirmed = window.confirm('Are you sure you want to upload this photo?');
       if (!confirmed) {
         return;
@@ -234,10 +243,11 @@ export const GalleryProvider = ({ children }) => {
     setImagePreview(null);
     setImageUpload(null)
     setPhotoDetails(null)
+    setDetailsMessage(null)
   }
 
   return (
-    <GalleryContext.Provider value={{ imageUrls, uploadMessage, imagePreview, uploading, isClicked, imageProUrls, imageProPreview, isClickedd, Data, isOpen, photoDetails, setPhotoDetails, handleImageUpload, handleProfileUpload, uploadProfileFile, uploadFile, viewImage, imgAction, togglePopdown, togglePopup }}>
+    <GalleryContext.Provider value={{ imageUrls, uploadMessage, imagePreview, uploading, isClicked, imageProUrls, imageProPreview, isClickedd, Data, isOpen, photoDetails, detailsMessage, detailsMessagess, setPhotoDetails, handleImageUpload, handleProfileUpload, uploadProfileFile, uploadFile, viewImage, imgAction, togglePopdown, togglePopup }}>
       {children}
     </GalleryContext.Provider>
   );
