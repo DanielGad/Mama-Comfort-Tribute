@@ -26,10 +26,12 @@ const TributePage = () => {
   }, []);
 
   const nextTributes = () => {
+    window.scrollTo(0, 0);
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
   const prevTributes = () => {
+    window.scrollTo(0, 0);
     setCurrentPage((prevPage) => prevPage - 1);
   };
 

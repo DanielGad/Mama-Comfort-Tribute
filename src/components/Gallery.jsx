@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { GalleryContext } from './GalleryContext';
 import '../assets/gallery.css';
-import LazyLoad from 'react-lazyload';
+import ProgressiveImg from './ProgressiveImg';
 
-import Masonry, {ResponsiveMasonry} from "react-responsive-masonry";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import ScrollToTop from './ScrollToTop';
 const database = getFirestore();
 const collectionRef = collection(database, 'tributes-info');
 
-// eslint-disable-next-line react/prop-types
 const Gallery = () => {
   const { isClicked, Data, viewImage, imgAction, togglePopdown } = useContext(GalleryContext);
 
@@ -27,12 +27,14 @@ const Gallery = () => {
     };
     fetchGalleryDetails();
   }, []);
-  
+
   const nextImages = () => {
+    window.scrollTo(0, 0);
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
   const prevImages = () => {
+    window.scrollTo(0, 0);
     setCurrentPage((prevPage) => prevPage - 1);
   };
 
@@ -41,53 +43,43 @@ const Gallery = () => {
 
   return (
     <>
-    <Link to={"/add-gallery"}><button className={`add-image ${isClicked ? 'clicked' : ''}`} onClick={togglePopdown}>Add Photo</button></Link>
-    {
+    <ScrollToTop />
+      <Link to={"/add-gallery"}>
+        <button className={`add-image ${isClicked ? 'clicked' : ''}`} onClick={togglePopdown}>Add Photo</button>
+      </Link>
+      {
       Data.img && <div className="preview" onClick={() => imgAction()}>
         <span className=" close-btn close" onClick={() => imgAction()}>&times;</span>
         {/* <span className="prev" onClick={() => imgAction('prev-img')}>&lt;</span> */}
+        <div className='preview-img'>
         <img src={Data.img} alt="Image" />
+        <div className='preview-info'>{Data.info}</div>
+        </div>
         {/* <span className="next" onClick={() => imgAction('next-img')}>&gt;</span> */}
       </div>
     }
       <div className="gallery-container">
-      <div className="headd">Gallery</div>
-      <div className="image-gallery">
-            <ResponsiveMasonry
-                columnsCountBreakPoints={{350: 1, 750: 2, 900: 3}}
-              >
-                <Masonry gutter="20px">
-  {galleryDetails.slice(startIndex, endIndex).map((details) => (
-    <LazyLoad key={details.id} height={200} offset={100}>
-      <div>
-        <img
-          src={details.imgUrl}
-          data-src="/istock.jpg"
-          style={{
-            width: "100%",
-            display: "block",
-            cursor: "pointer",
-            border: "5px solid rgb(31, 26, 44)",
-            borderRadius: "20px"
-          }}
-          alt=""
-          onClick={() => viewImage(details.imgUrl, details.i)}
-          loading="lazy"
-          className="lazyload"
-        />
-        <p>{details.info}</p>
+        <div className="headd">Gallery</div>
+        <div className="image-gallery">
+          <ResponsiveMasonry
+            columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
+          >
+            <Masonry gutter="20px">
+              {galleryDetails.slice(startIndex, endIndex).map((details) => (
+                <div key={details.id}> 
+                  <ProgressiveImg placeholderSrc="/istock.jpg" src={details.imgUrl} alt="" 
+                  onClick={() => viewImage(details.imgUrl, details.info, details.i)}/>
+                  <p>{details.info}</p>
+                </div>
+              ))}
+            </Masonry>
+          </ResponsiveMasonry>
+        </div>
       </div>
-    </LazyLoad>
-  ))}
-</Masonry>
-            </ResponsiveMasonry>
+      <div className='navi'>
+        <button className='link-button' onClick={prevImages} disabled={currentPage === 0}>Previous</button>
+        <button className='link-button' onClick={nextImages} disabled={endIndex >= galleryDetails.length}>Next</button>
       </div>
-
-    </div>
-    <div className='navi'>
-      <button className='link-button' onClick={prevImages} disabled={currentPage === 0}>Previous</button>
-      <button className='link-button' onClick={nextImages} disabled={endIndex >= galleryDetails.length}>Next</button>
-    </div>
     </>
   );
 };

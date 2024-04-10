@@ -3,6 +3,10 @@ import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "./firebase";
 import { v4 as uuidv4 } from "uuid";
 import { node } from 'prop-types';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
+
+const database = getFirestore();
+const collectionRef = collection(database, 'tributes-info');
 
 export const GalleryContext = createContext();
 
@@ -22,6 +26,7 @@ export const GalleryProvider = ({ children }) => {
   const [isClickedd, setIsClickedd] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [photoDetails, setPhotoDetails] = useState("");
+  const [galleryDetails, setGalleryDetails] = useState([]);
 
   const imagesListRef = ref(storage, "Tribute-images/");
 
@@ -98,14 +103,22 @@ export const GalleryProvider = ({ children }) => {
         setDetailsMessagess('Select a photo to upload!');
         await new Promise(resolve => setTimeout(resolve, 2000));
         setDetailsMessagess(null);
-        return null;
+        return;
+      }
+
+      const maxSize = 4 * 1024 * 1024;
+      if (imageUpload.size > maxSize) {
+        setDetailsMessagess("Selected Photo is too large. Please select a photo under 4MB.");
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        setDetailsMessagess(null);
+        return;
       }
 
       if (!photoDetails) {
         setDetailsMessage('Kindly provide details about the photo.');
         await new Promise(resolve => setTimeout(resolve, 2000));
         setDetailsMessage(null);
-        return null;
+        return;
       }
       
       const confirmed = window.confirm('Are you sure you want to upload this photo?');
@@ -139,11 +152,17 @@ export const GalleryProvider = ({ children }) => {
       }, 300);
     }
   };
-
-
   
 
   const uploadProfileFile = async () => {
+    const maxSize = 2 * 1024 * 1024; // 2MB
+      if (imageProfile.size > maxSize) {
+        setDetailsMessage('Selected Photo is too large. Please select a photo not more than 2MB.');
+        await new Promise(resolve => setTimeout(resolve, 4000));
+        setDetailsMessage(null);
+        return;
+      }
+
     try {
       let imgUrl = 'https://firebasestorage.googleapis.com/v0/b/mama-comfort-tribute.appspot.com/o/Tribute-profile%2F1074c9f9-5d5a-4793-8c03-f27e2f66cbd7_m1.png?alt=media&token=30725b90-31a2-4723-9d9e-b1b6c3146bfa';
   
@@ -207,26 +226,37 @@ export const GalleryProvider = ({ children }) => {
   }, []);
   
   
-  
+  useEffect(() => {
+    const fetchGalleryDetails = async () => {
+      const querySnapshot = await getDocs(collectionRef);
+      const details = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setGalleryDetails(details);
+    };
+    fetchGalleryDetails();
+  }, []);
   
 
-  const viewImage = (img, i) => {
-    setData({img, i})
-  }
-
+  const viewImage = (img, info, i) => {
+    setData({ img, info, i });
+  };  
+  
   const imgAction = (action) => {
     let i = Data.i;
+  
     if (action === 'next-img') {
-      setData({img: imageUrls[i + 1], i: i + 1})
+      setData({img: galleryDetails[i + 1].imgUrl, info: galleryDetails[i + 1].info, i: i + 1});
     }
     if (action === 'prev-img') {
-      setData({img: imageUrls[i - 1], i: i - 1})
+      setData({img: galleryDetails[i - 1].imgUrl, info: galleryDetails[i - 1].info, i: i - 1});
     }
     if (!action) {
-      setData({img: '', i: 0})
+      setData({img: '', info: '', i: 0});
     }
-  }
-
+  };
+  
 
   const togglePopup = () => {
     setIsOpen(!isOpen);
@@ -242,8 +272,10 @@ export const GalleryProvider = ({ children }) => {
     setUploadMessage(null)
     setImagePreview(null);
     setImageUpload(null)
+    setImageProfile(null)
     setPhotoDetails(null)
     setDetailsMessage(null)
+    setImageProPreview(null)
   }
 
   return (

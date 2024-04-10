@@ -1,79 +1,95 @@
-import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-import '../assets/tributeform.css';
-import { getFirestore, collection, addDoc, onSnapshot } from 'firebase/firestore';
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { GalleryContext } from './GalleryContext';
+import '../assets/gallery.css';
+import LazyLoad from 'react-lazyload';
 
+import Masonry, {ResponsiveMasonry} from "react-responsive-masonry";
 const database = getFirestore();
-const collectionRef = collection(database, 'Tribute');
+const collectionRef = collection(database, 'tributes-info');
 
 // eslint-disable-next-line react/prop-types
-const TributeForm = ({ onSubmitted }) => {
-  const { imageProPreview, handleProfileUpload, uploadProfileFile, imageProUrls } = useContext(GalleryContext)
-  const [, setTributes] = useState([]);
+const Gallery = () => {
+  const { isClicked, Data, viewImage, imgAction, togglePopdown } = useContext(GalleryContext);
+
+  const [galleryDetails, setGalleryDetails] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
-      const updatedTributes = snapshot.docs.map((doc) => ({
-        ...doc.data(),
+    const fetchGalleryDetails = async () => {
+      const querySnapshot = await getDocs(collectionRef);
+      const details = querySnapshot.docs.map((doc) => ({
         id: doc.id,
+        ...doc.data(),
       }));
-      setTributes(updatedTributes);
-    });
-
-    return () => unsubscribe();
+      setGalleryDetails(details);
+    };
+    fetchGalleryDetails();
   }, []);
-
-  const addTribute = (body, author, imgUrl) => {
-    return addDoc(collectionRef, { body, author, imgUrl });
+  
+  const nextImages = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    try {
-      await uploadProfileFile();
-      const imgUrl = imageProUrls;
-      const body = e.target.body.value;
-      const author = e.target.author.value;
-  
-      const confirmed = window.confirm('Are you sure you want to submit this tribute?');
-      if (!confirmed) {
-        return;
-      }
-  
-      await addTribute(body, author, imgUrl);
-      alert('Tribute Submitted Successfully!');
-      onSubmitted();
-    } catch (error) {
-      console.error('Error adding tribute: ', error);
-    }
+  const prevImages = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
   };
-  
+
+  const startIndex = currentPage * 6;
+  const endIndex = startIndex + 6;
 
   return (
-    <div>
-      <form className="tribute-form" onSubmit={handleSubmit}>
-      <div className='head'>Add a Tribute</div>
-      <label htmlFor="body">Tribute:</label>
-      <textarea id="body" name="body" rows="4" required />
-      <label htmlFor="author">Name:</label>
-      <input type="text" id="author" name="author" required />
-      <label htmlFor="file">Profile Image:</label>
-      <input type="file" onChange={handleProfileUpload}/>
-      <div className="image-preview">
-          {imageProPreview && <img src={imageProPreview} alt="Preview" className="image-preview" width="50%" />}
-        </div>
-        {/* <button onClick={uploadProfileFile}>Upload Profile</button> */}
-      <button type="submit" onClick={uploadProfileFile}>Add Tribute</button>
-    </form>
+    <>
+    <Link to={"/add-gallery"}><button className={`add-image ${isClicked ? 'clicked' : ''}`} onClick={togglePopdown}>Add Photo</button></Link>
+    {
+      Data.img && <div className="preview" onClick={() => imgAction()}>
+        <span className=" close-btn close" onClick={() => imgAction()}>&times;</span>
+        <span className="prev" onClick={() => imgAction('prev-img')}>&lt;</span>
+        <img src={Data.img} alt="Image" />
+        <span className="next" onClick={() => imgAction('next-img')}>&gt;</span>
+      </div>
+    }
+      <div className="gallery-container">
+      <div className="headd">Gallery</div>
+      <div className="image-gallery">
+            <ResponsiveMasonry
+                columnsCountBreakPoints={{350: 1, 750: 2, 900: 3}}
+              >
+                <Masonry gutter="20px">
+  {galleryDetails.slice(startIndex, endIndex).map((details) => (
+    <LazyLoad key={details.id} height={200} offset={100}>
+      <div>
+        <img
+          src="/istock.jpg"
+          data-src={details.imgUrl}
+          style={{
+            width: "100%",
+            display: "block",
+            cursor: "pointer",
+            border: "5px solid rgb(31, 26, 44)",
+            borderRadius: "20px"
+          }}
+          alt=""
+          onClick={() => viewImage(details.imgUrl, details.i)}
+          loading="lazy"
+          className="lazyload"
+        />
+        <p>{details.info}</p>
+      </div>
+    </LazyLoad>
+  ))}
+</Masonry>
+            </ResponsiveMasonry>
+      </div>
+
     </div>
+    <div className='navi'>
+      <button className='link-button' onClick={prevImages} disabled={currentPage === 0}>Previous</button>
+      <button className='link-button' onClick={nextImages} disabled={endIndex >= galleryDetails.length}>Next</button>
+    </div>
+    </>
   );
 };
 
-TributeForm.propTypes = {
-  addTribute: PropTypes.func.isRequired,
-};
-
-export default TributeForm;
+export default Gallery;

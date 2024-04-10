@@ -9,7 +9,7 @@ const collectionRef = collection(database, 'Tribute');
 
 // eslint-disable-next-line react/prop-types
 const TributeForm = ({ onSubmitted }) => {
-  const { imageProPreview, handleProfileUpload, uploadProfileFile, isClickedd, setIsClickedd } = useContext(GalleryContext)
+  const { imageProPreview, handleProfileUpload, uploadProfileFile, isClickedd, setIsClickedd, detailsMessage } = useContext(GalleryContext)
   const [loading, setLoading] = useState(false);
   
 
@@ -57,6 +57,9 @@ const TributeForm = ({ onSubmitted }) => {
       <input type="text" id="relationship" name="relationship" required maxLength={30}/>
       <label htmlFor="file">Profile Photo:</label>
       <input type="file" onChange={handleProfileUpload}/>
+      <div className="error-message">
+          {detailsMessage && <div>{detailsMessage}</div>}
+        </div>
       <div className="image-preview">
           {imageProPreview && <img src={imageProPreview} alt="Preview" className="image-preview" width="50%" />}
         </div>
@@ -65,6 +68,7 @@ const TributeForm = ({ onSubmitted }) => {
         {loading ? 'Uploading...' : 'Add Tribute'}
       </button>
     </form>
+
     </div>
   );
 };
