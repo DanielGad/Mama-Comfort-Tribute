@@ -7,6 +7,7 @@ import ProgressiveImg from './ProgressiveImg';
 
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ScrollToTop from './ScrollToTop';
+import Default from "/istock.jpg";
 const database = getFirestore();
 const collectionRef = collection(database, 'tributes-info');
 
@@ -67,7 +68,7 @@ const Gallery = () => {
             <Masonry gutter="20px">
               {galleryDetails.slice(startIndex, endIndex).map((details) => (
                 <div key={details.id}> 
-                  <ProgressiveImg placeholderSrc="/istock.jpg" src={details.imgUrl} alt="" 
+                  <ProgressiveImg placeholderSrc={Default} src={details.imgUrl} alt="" 
                   onClick={() => viewImage(details.imgUrl, details.info, details.i)}/>
                   <p>{details.info}</p>
                 </div>
