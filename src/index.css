@@ -156,6 +156,13 @@ body {
   right: 100;
 }
 
+.slick-prev:hover,
+.slick-next:hover,
+.slick-prev:active,
+.slick-next:active {
+  background-color: rgb(31, 26, 44);
+}
+
 .tri {
   background-color: white;
   padding: 20px;
@@ -182,6 +189,7 @@ body {
   overflow: hidden;
   margin: auto;
   margin-bottom: 10px;
+  /* border: 3px solid black; */
 }
 
 .tri-name {
@@ -341,7 +349,6 @@ body {
   }
 
   .tri-cover img {
-    /* margin-bottom: -10px; */
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -349,10 +356,15 @@ body {
   }
   
   .tri-cover {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     overflow: hidden;
     margin-bottom: auto;
+  }
+
+  .tri-body {
+    align-items: center;
+    justify-content: center;
   }
 
   .tri-name {
