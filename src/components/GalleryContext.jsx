@@ -101,7 +101,7 @@ export const GalleryProvider = ({ children }) => {
     try {
       if (imageUpload == null) {
         setDetailsMessagess('Select a photo to upload!');
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 3000));
         setDetailsMessagess(null);
         return;
       }
@@ -109,14 +109,14 @@ export const GalleryProvider = ({ children }) => {
       const maxSize = 4 * 1024 * 1024;
       if (imageUpload.size > maxSize) {
         setDetailsMessagess("Selected Photo is too large. Please select a photo under 4MB.");
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 3000));
         setDetailsMessagess(null);
         return;
       }
 
       if (!photoDetails) {
         setDetailsMessage('Kindly provide details about the photo.');
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 3000));
         setDetailsMessage(null);
         return;
       }
