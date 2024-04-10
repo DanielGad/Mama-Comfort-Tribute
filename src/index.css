@@ -132,6 +132,30 @@ body {
   transform: scale(1.1);
 }
 
+.slick-prev,
+.slick-next {
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(31,26,44, 0.5);
+  color: rgb(31,26,44);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slick-prev {
+  left: 100; 
+}
+
+.slick-next {
+  right: 100;
+}
+
 .tri {
   background-color: white;
   padding: 20px;
