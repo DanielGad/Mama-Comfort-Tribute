@@ -49,7 +49,7 @@ const GalleryForm = ({ onSubmitted }) => {
           {detailsMessagess && <div>{detailsMessagess}</div>}
         </div>
       <div className='details'>
-      <div><label htmlFor="info">Details about the Photo:</label></div>
+      <div><label htmlFor="info">Caption for the Photo:</label></div>
       <textarea
         type="text"
         id="info"

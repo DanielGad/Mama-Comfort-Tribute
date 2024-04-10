@@ -115,7 +115,7 @@ export const GalleryProvider = ({ children }) => {
       }
 
       if (!photoDetails) {
-        setDetailsMessage('Kindly provide details about the photo.');
+        setDetailsMessage('Kindly provide captions for the photo.');
         await new Promise(resolve => setTimeout(resolve, 3000));
         setDetailsMessage(null);
         return;
