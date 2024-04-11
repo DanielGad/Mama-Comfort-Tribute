@@ -9,15 +9,16 @@ const collectionRef = collection(database, 'Tribute');
 
 // eslint-disable-next-line react/prop-types
 const TributeForm = ({ onSubmitted }) => {
-  const { imageProPreview, handleProfileUpload, uploadProfileFile, isClickedd, setIsClickedd, detailsMessage } = useContext(GalleryContext)
+  const { imageProPreview, handleProfileUpload, uploadProfileFile, isClickedd, detailsMessage } = useContext(GalleryContext)
   const [loading, setLoading] = useState(false);
   
 
   const addTribute = async (body, author, relationship, imgUrl) => {
     const querySnapshot = await getDocs(collectionRef);
-    const sequence = querySnapshot.size;
+    const sequence = querySnapshot ? querySnapshot.size : 0;
     return addDoc(collectionRef, { body, author, relationship, imgUrl, sequence });
   };
+  
 
   const handleSubmit = async (e) => {
     const confirmed = window.confirm('Are you sure you want to submit this tribute?');
@@ -66,7 +67,7 @@ const TributeForm = ({ onSubmitted }) => {
           {imageProPreview && <img src={imageProPreview} alt="Preview" className="image-preview" width="50%" />}
         </div>
       <button type="submit" disabled={loading} className={`add-Tribute ${isClickedd ? 'clicked' : ''}`} 
-      onClick={() => setIsClickedd(true)}>
+      >
         {loading ? 'Uploading...' : 'Add Tribute'}
       </button>
     </form>

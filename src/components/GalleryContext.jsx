@@ -64,38 +64,6 @@ export const GalleryProvider = ({ children }) => {
     reader.readAsDataURL(file);
   };
 
-  // const uploadFile = () => {
-  //   if (imageUpload == null) {
-  //     alert("Please select a file to upload.");
-  //     return;
-  //   }
-  //   if (imageUpload == null) return;
-  //   setUploading(true);
-  //   const fileName = `${uuidv4()}_${imageUpload.name}`;
-  //   const imageRef = ref(storage, `Tribute-images/${fileName}`);
-  //   uploadBytes(imageRef, imageUpload).then((snapshot) => {
-  //     getDownloadURL(snapshot.ref)
-  //       .then((url) => {
-  //         setImageUrls((prevUrls) => [...prevUrls, url]);
-  //         setUploadMessage("Image uploaded successfully!");
-  //         setTimeout(() => {
-  //           window.location.href = '/gallery';
-  //         }, 2000);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error getting download URL:", error);
-  //         setUploadMessage("Error uploading file. Please try again.");
-  //       })
-  //       .finally(() => {
-  //         setUploading(false);
-  //       });
-  //   });
-  //   setIsClickedd(true);
-  //   setTimeout(() => {
-  //     setIsClickedd(false);
-  //   }, 300);
-  // };
-
   const uploadFile = async () => {
     setPhotoDetails("")
     try {
@@ -156,9 +124,16 @@ export const GalleryProvider = ({ children }) => {
   
 
   const uploadProfileFile = async () => {
-    const maxSize = 2 * 1024 * 1024; // 2MB
+    const maxSize = 4 * 1024 * 1024; // 4MB
+
+    let imgUrl;
+    if (!imageProfile) {
+      imgUrl = 'https://firebasestorage.googleapis.com/v0/b/mama-comfort-tribute.appspot.com/o/Tribute-profile%2F1074c9f9-5d5a-4793-8c03-f27e2f66cbd7_m1.png?alt=media&token=30725b90-31a2-4723-9d9e-b1b6c3146bfa';
+      return imgUrl;
+    }
+
       if (imageProfile.size > maxSize) {
-        setDetailsMessage('Selected Photo is too large. Please select a photo not more than 2MB.');
+        setDetailsMessage('Selected Photo is too large. Please select a photo not more than 4MB.');
         await new Promise(resolve => setTimeout(resolve, 4000));
         setDetailsMessage(null);
         return;

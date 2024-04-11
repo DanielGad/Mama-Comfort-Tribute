@@ -13,7 +13,7 @@ const GalleryForm = ({ onSubmitted }) => {
 
   const addGallery = async (info, imgUrl) => {
     const querySnapshot = await getDocs(collectionRef);
-    const sequence = querySnapshot.size; 
+    const sequence = querySnapshot ? querySnapshot.size : 0; 
     return await addDoc(collectionRef, { info, imgUrl, sequence });
   };
 
@@ -73,7 +73,7 @@ const GalleryForm = ({ onSubmitted }) => {
         </div>
         <div>
           <button onClick={handleSubmit} disabled={uploading} className={`upload-button ${isClickedd ? 'clicked' : ''}`}>
-            {uploading ? "Uploading..." : "Upload Image"}
+            {uploading ? "Uploading..." : "Upload Photo"}
           </button>
         </div>
         <div className="message">
