@@ -101,7 +101,7 @@ const TributeBody = () => {
       <div className='carousel'>
         <h1>PHOTO SPEAKS</h1>
         <Slider {...settings} className='slider'>
-          {tributesImg.slice(0, 4).map((pics, index) => (
+          {tributesImg.slice(0, 6).map((pics, index) => (
             <div key={index} className='car-con'>
               <img src={pics.imgUrl} alt={`Image ${index + 1}`} onClick={() => handleImageClick(pics.imgUrl, pics.info)} />
               <p>{pics.info}</p>

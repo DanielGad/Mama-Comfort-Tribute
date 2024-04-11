@@ -1,4 +1,4 @@
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore';
 import { GalleryContext } from './GalleryContext';
 import { useContext  } from 'react';
 import { Link } from 'react-router-dom';
@@ -10,9 +10,13 @@ const collectionRef = collection(database, 'tributes-info');
 const GalleryForm = ({ onSubmitted }) => {
   const { handleImageUpload, photoDetails, setPhotoDetails, imagePreview, uploadMessage, uploading, isClickedd, uploadFile, detailsMessage, detailsMessagess } = useContext(GalleryContext);
 
-  const addGallery = (info, imgUrl) => {
-    return addDoc(collectionRef, {info, imgUrl})
+
+  const addGallery = async (info, imgUrl) => {
+    const querySnapshot = await getDocs(collectionRef);
+    const sequence = querySnapshot.size; 
+    return await addDoc(collectionRef, { info, imgUrl, sequence });
   };
+
 
   const handleSubmit = async (e) => {
     setPhotoDetails("")

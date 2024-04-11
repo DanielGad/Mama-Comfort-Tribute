@@ -1,4 +1,4 @@
-import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
 import { GalleryContext } from './GalleryContext';
@@ -14,15 +14,15 @@ const TributePage = () => {
   const { isClicked, togglePopdown } = useContext(GalleryContext);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
-      const updatedTributes = snapshot.docs.map((doc) => ({
-        ...doc.data(),
+    const fetchGalleryDetails = async () => {
+      const querySnapshot = await getDocs(query(collectionRef, orderBy('sequence')));
+      const details = querySnapshot.docs.map((doc) => ({
         id: doc.id,
+        ...doc.data(),
       }));
-      setTributes(updatedTributes);
-    });
-
-    return () => unsubscribe();
+      setTributes(details);
+    };
+    fetchGalleryDetails();
   }, []);
 
   const nextTributes = () => {

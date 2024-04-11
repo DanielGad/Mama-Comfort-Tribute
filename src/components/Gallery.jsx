@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, query, orderBy, } from 'firebase/firestore';
 import { GalleryContext } from './GalleryContext';
 import '../assets/gallery.css';
 import ProgressiveImg from './ProgressiveImg';
@@ -19,7 +19,7 @@ const Gallery = () => {
 
   useEffect(() => {
     const fetchGalleryDetails = async () => {
-      const querySnapshot = await getDocs(collectionRef);
+      const querySnapshot = await getDocs(query(collectionRef, orderBy('sequence')));
       const details = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),

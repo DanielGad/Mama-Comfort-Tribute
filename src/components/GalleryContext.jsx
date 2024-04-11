@@ -125,6 +125,7 @@ export const GalleryProvider = ({ children }) => {
       if (!confirmed) {
         return;
       }
+      
       let imgUrl;
   
       if (imageUpload != null) {

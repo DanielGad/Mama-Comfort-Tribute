@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/tributeform.css';
-import { getFirestore, collection, addDoc} from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs} from 'firebase/firestore';
 import { useContext } from 'react';
 import { GalleryContext } from './GalleryContext';
 const database = getFirestore();
@@ -13,8 +13,10 @@ const TributeForm = ({ onSubmitted }) => {
   const [loading, setLoading] = useState(false);
   
 
-  const addTribute = (body, author, relationship, imgUrl) => {
-    return addDoc(collectionRef, { body, author, relationship, imgUrl });
+  const addTribute = async (body, author, relationship, imgUrl) => {
+    const querySnapshot = await getDocs(collectionRef);
+    const sequence = querySnapshot.size;
+    return addDoc(collectionRef, { body, author, relationship, imgUrl, sequence });
   };
 
   const handleSubmit = async (e) => {
