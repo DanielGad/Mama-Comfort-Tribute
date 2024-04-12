@@ -58,7 +58,7 @@ const GalleryForm = ({ onSubmitted }) => {
         type="text"
         id="info"
         name="info"
-        maxLength={50}
+        maxLength={60}
         required
         rows={"2"}
         value={photoDetails || ""}

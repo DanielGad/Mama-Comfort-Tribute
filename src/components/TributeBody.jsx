@@ -126,7 +126,7 @@ const TributeBody = () => {
 
 <div className="tributes">
         <h1 style={{textAlign: "center", paddingTop: "20px"}}>Tributes</h1>
-        {tributes.slice(0, 4).map((tribute) => (
+        {tributes.slice(0, 3).map((tribute) => (
           <div className="tri" key={tribute.id}>
             <div className='tri-cover'>
                   <img src={tribute.imgUrl}alt="" />  

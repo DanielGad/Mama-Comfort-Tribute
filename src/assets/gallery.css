@@ -25,9 +25,10 @@
 }
 
 .image-gallery p {
+  width: 80%;
   font-size: large;
   font-family: roboto;
-  margin: 0;
+  margin: auto;
   margin-top: 5px;
   text-align: center;
 }
@@ -83,6 +84,7 @@
 }
 
 .preview-info {
+  width: 70%;
   background-color: rgb(31,26,44);
   color: white;
   padding: 15px;
@@ -90,9 +92,8 @@
   font-family: Roboto;
   font-size: large;
   position: absolute;
-  bottom: -5%;
+  bottom: -10%;
   left: 10%;
-
 }
 
 .close {
