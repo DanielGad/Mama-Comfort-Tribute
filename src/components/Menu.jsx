@@ -5,6 +5,14 @@ const Menu = () => {
 
   const [isPlaying, setIsPlaying] = useState(false);
 
+  useEffect(() => {
+    const music = document.getElementById('bg-music'); 
+    if (music) { 
+      music.play(); 
+    setIsPlaying(true); 
+    } 
+  }, []);
+
   function toggleMusic() {
     var music = document.getElementById('bg-music');
     if (music.paused) {
