@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 const Menu = () => {
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   function toggleMusic() {
     var music = document.getElementById('bg-music');
