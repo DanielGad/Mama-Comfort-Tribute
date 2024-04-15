@@ -13,7 +13,6 @@ const Menu = () => {
         setAutoplayDenied(true);
       });
       setIsPlaying(true);
-setIsPlayingg(true)
     }
   }, []);
   
