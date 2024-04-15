@@ -22,27 +22,16 @@ const Menu = () => {
       if (music.paused) {
         music.play();
         setIsPlaying(true);
-        setIsPlayingg(true);
+setIsPlayingg(true)
       } else {
         music.pause();
         setIsPlaying(false);
-        setIsPlayingg(false);
+        setIsPlayingg(false)
       }
     } else {
       console.error('Background music not found.');
     }
   }
-
-  useEffect(() => {
-    if (autoplayDenied) {
-      const allowMusic = window.confirm('Permission required! Do you want to play music?');
-      if (allowMusic) {
-        setIsPlayingg(true);
-      } else {
-        setIsPlayingg(false);
-      }
-    }
-  }, [autoplayDenied]);
 
   return (
     <div className='menu'>
@@ -56,13 +45,13 @@ const Menu = () => {
         <div className='menu-button'>Gallery</div>
       </Link>
       {autoplayDenied && (
-        <div className="menu-button" onClick={toggleMusic} aria-label={isPlaying ? 'Play Music' : 'Pause'}>
-          {isPlayingg ? 'Play Music' : 'Pause'}
+        <div className="menu-button" onClick={toggleMusic} aria-label={isPlaying ? 'Play Music: 'Pause}>
+          {!isPlayingg ? 'Play Music: 'Pause}
         </div>
       )}
       {!autoplayDenied && (
         <div className="menu-button" onClick={toggleMusic} aria-label={isPlaying ? 'Pause' : 'Play'}>
-          {isPlayingg ? 'Pause' : 'Play'}
+          {isPlaying ? 'Pause' : 'Play'}
         </div>
       )}
     </div>
