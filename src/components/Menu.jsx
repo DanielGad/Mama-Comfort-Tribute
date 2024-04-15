@@ -42,8 +42,8 @@ const Menu = () => {
         <div className='menu-button'>Gallery</div>
       </Link>
       {autoplayDenied && (
-        <div className="menu-button" onClick={toggleMusic} aria-label="Click to Play Music">
-          Click to Play Music
+        <div className="menu-button" onClick={toggleMusic} aria-label={isPlaying ? 'Play Music' : 'Pause Music'}>
+          {isPlaying ? 'Play Music' : 'Pause Music'}
         </div>
       )}
       {!autoplayDenied && (
