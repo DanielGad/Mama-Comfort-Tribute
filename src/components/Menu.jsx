@@ -45,8 +45,8 @@ setIsPlayingg(true)
         <div className='menu-button'>Gallery</div>
       </Link>
       {autoplayDenied && (
-        <div className="menu-button" onClick={toggleMusic} aria-label={isPlaying ? 'Pause' : 'Play Music'}>
-          {isPlayingg ? 'Pause' : 'Play Music'}
+        <div className="menu-button" onClick={toggleMusic} aria-label={isPlaying ? 'Play Music: 'Pause}>
+          {!isPlayingg ? 'Play Music: 'Pause}
         </div>
       )}
       {!autoplayDenied && (
