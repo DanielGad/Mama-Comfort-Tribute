@@ -23,13 +23,6 @@ const TributeBody = () => {
   const [tributesImg, setTributesImg] = useState([]);
 
   useEffect(() => {
-    const music = document.getElementById('bg-music'); 
-    if (music) { 
-      music.play(); 
-    } 
-  }, []);
-
-  useEffect(() => {
     const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
       const updatedTributes = snapshot.docs.map((doc) => ({
         ...doc.data(),
