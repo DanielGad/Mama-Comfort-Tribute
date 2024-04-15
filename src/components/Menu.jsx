@@ -37,10 +37,8 @@ const Menu = () => {
     if (autoplayDenied) {
       const allowMusic = window.confirm('Permission required! Do you want to play music?');
       if (allowMusic) {
-music.play();
         setIsPlayingg(true);
       } else {
-        music.pause();
         setIsPlayingg(false);
       }
     }
