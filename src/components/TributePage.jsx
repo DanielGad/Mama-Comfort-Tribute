@@ -9,7 +9,7 @@ const database = getFirestore();
 const collectionRef = collection(database, 'Tribute');
 
 const TributePage = () => {
-  const { isClicked, togglePopdown, setDisImg } = useContext(GalleryContext);
+  const { isClicked, togglePopdown } = useContext(GalleryContext);
   const [tributess, setTributes] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [editingTribute, setEditingTribute] = useState(null);
@@ -40,10 +40,10 @@ const TributePage = () => {
   const endIndex = startIndex + 5;
 
   const [modalOpen, setModalOpen] = useState(false);
-  const handleEdit = (tribute) => {
-    setEditingTribute(tribute);
-    setModalOpen(true);
-  };
+  // const handleEdit = (tribute) => {
+  //   setEditingTribute(tribute);
+  //   setModalOpen(true);
+  // };
 
   const handleUpdate = async (id, body, author, relationship, imgUrl) => {
     try {
@@ -72,8 +72,8 @@ const TributePage = () => {
             <div style={{
               display: 'flex', justifyContent: 'space-between'
             }}>
-              <button onClick={() => {handleEdit(tribute)
-              setDisImg(tribute.imgUrl)}}>Edit</button>
+              {/* <button onClick={() => {handleEdit(tribute)
+              setDisImg(tribute.imgUrl)}}>Edit</button> */}
             <div className='tri-name'>{tribute.author} ({tribute.relationship})</div>
             </div>
             </div>
