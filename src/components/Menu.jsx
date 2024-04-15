@@ -15,6 +15,7 @@ const Menu = () => {
 
   function toggleMusic() {
     var music = document.getElementById('bg-music');
+    if (music) {
     if (music.paused) {
       music.play();
       setIsPlaying(true);
@@ -22,6 +23,7 @@ const Menu = () => {
       music.pause();
       setIsPlaying(false);
     }
+  }
   }
 
   return (
@@ -31,7 +33,7 @@ const Menu = () => {
       <Link to="/tributes" style={{ textDecoration: 'none' }}><div className='menu-button'>Tributes</div></Link>
       <Link to="/gallery" style={{ textDecoration: 'none' }}><div className='menu-button'>Gallery</div></Link>
       <div className="menu-button" onClick={toggleMusic}>
-        {isPlaying ? 'Pause Music' : 'Play Music'}
+        {isPlaying ? 'Pause' : 'Play'}
       </div>
     </div>
   );
