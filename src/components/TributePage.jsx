@@ -69,13 +69,13 @@ const TributePage = () => {
             </div>
             <div>
             <div className='tri-body'>{tribute.body}</div>
-            <div style={{
-              display: 'flex', justifyContent: 'space-between'
-            }}>
+            {/* <div style={{
+              display: 'flex', justifyContent: 'flex-end'
+            }}> */}
               {/* <button onClick={() => {handleEdit(tribute)
               setDisImg(tribute.imgUrl)}}>Edit</button> */}
             <div className='tri-name'>{tribute.author} ({tribute.relationship})</div>
-            </div>
+            {/* </div> */}
             </div>
           </div>
         ))}

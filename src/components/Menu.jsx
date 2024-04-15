@@ -52,25 +52,7 @@ const Menu = () => {
     setIsGalleryOpen(false);
   };
 
-  useEffect(() => {
-    const handleDocumentClick = (e) => {
-      if (!e.target.closest('.dropdown')) {
-        closeDropdowns();
-      }
-    };
-
-    const handleScroll = () => {
-      closeDropdowns();
-    };
-
-    document.body.addEventListener('click', handleDocumentClick);
-    document.body.addEventListener('scroll', handleScroll);
-
-    return () => {
-      document.body.removeEventListener('click', handleDocumentClick);
-      document.body.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  // window.addEventListener('scroll', closeDropdowns);
 
   return (
     <div className='menu'>
