@@ -6,13 +6,18 @@ import Gallery from './components/Gallery';
 import ScrollToTop from './components/ScrollToTop';
 import TributePage from './components/TributePage';
 import GalleryForm from "./components/GalleryForm";
+import MusicModal from "./components/MusicModal";
+import { useContext } from "react";
+import { GalleryContext } from "./components/GalleryContext";
 
 const App = () => {
+  const { showModal } = useContext(GalleryContext)
 
   return (
     <Router>
       <div>
         <ScrollToTop />
+        {showModal && <MusicModal />}
         <Menu />
         <Routes>
           <Route path="/" element={<TributeBody />} />

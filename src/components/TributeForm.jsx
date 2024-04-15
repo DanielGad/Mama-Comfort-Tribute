@@ -19,7 +19,6 @@ const TributeForm = ({ onSubmitted }) => {
     return addDoc(collectionRef, { body, author, relationship, imgUrl, sequence });
   };
   
-
   const handleSubmit = async (e) => {
     const confirmed = window.confirm('Are you sure you want to submit this tribute?');
   if (!confirmed) {

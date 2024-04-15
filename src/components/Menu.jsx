@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { GalleryContext } from './GalleryContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVolumeOff, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
+
+
 
 const Menu = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isPlayingg, setIsPlayingg] = useState(false);
+  const { isPlayingg, setIsPlayingg} = useContext(GalleryContext)
   const [autoplayDenied, setAutoplayDenied] = useState(false);
 
   useEffect(() => {
@@ -12,7 +16,6 @@ const Menu = () => {
       music.play().catch(() => {
         setAutoplayDenied(true);
       });
-      setIsPlaying(true);
     }
   }, []);
   
@@ -21,11 +24,9 @@ const Menu = () => {
     if (music) {
       if (music.paused) {
         music.play();
-        setIsPlaying(true);
-setIsPlayingg(true)
+        setIsPlayingg(true)
       } else {
         music.pause();
-        setIsPlaying(false);
         setIsPlayingg(false)
       }
     } else {
@@ -45,13 +46,8 @@ setIsPlayingg(true)
         <div className='menu-button'>Gallery</div>
       </Link>
       {autoplayDenied && (
-        <div className="menu-button" onClick={toggleMusic} aria-label={!isPlaying ? 'Play Music' : 'Pause'}>
-          {!isPlayingg ? 'Play Music' : 'Pause'}
-        </div>
-      )}
-      {!autoplayDenied && (
-        <div className="menu-button" onClick={toggleMusic} aria-label={isPlaying ? 'Pause' : 'Play'}>
-          {isPlayingg ? 'Pause' : 'Play'}
+        <div className="menu-button sound" onClick={toggleMusic} aria-label={!isPlayingg ? 'Play' : 'Pause'}>
+          {!isPlayingg ? <FontAwesomeIcon icon={faVolumeUp} /> : <FontAwesomeIcon icon={faVolumeOff} />}
         </div>
       )}
     </div>

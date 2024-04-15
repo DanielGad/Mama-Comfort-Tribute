@@ -81,7 +81,7 @@ const TributeBody = () => {
       <div className="tribute-body">
         <div className="top">
           <h1>Celebration of Life</h1>
-          <img src="/Mama Comfort Oyeteju.png" alt="Mama Comfort Image" width={'400px'} />
+          <img src="/Mama Comfort OyetejuN.png" alt="Mama Comfort Image" width={'400px'} />
           <div className="name">
             <div className="name1">MAMA</div>
             <div className="name2">COMFORT OYETEJU</div>

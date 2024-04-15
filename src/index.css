@@ -21,7 +21,6 @@ div, button, p, span {
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   -webkit-user-select: none; /* Safari */
-  pointer-event: none;
 }
 
 .carousel {
@@ -313,8 +312,28 @@ div, button, p, span {
   background-color: rgb(81,103,151);
 }
 
+.modal-music {
+  width: 70%;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  font-family: Roboto;
+  border-radius: 20px;
+}
+
+.click, .click button {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
 
 @media screen and (min-width: 959px) {
+  .click {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 30%;
+  }
+
   .image-fullscreen p {
     position: absolute;
     bottom: 68px;

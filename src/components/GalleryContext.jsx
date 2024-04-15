@@ -63,6 +63,7 @@ export const GalleryProvider = ({ children }) => {
     };
     reader.readAsDataURL(file);
   };
+  
 
   const uploadFile = async () => {
     setPhotoDetails("")
@@ -121,6 +122,34 @@ export const GalleryProvider = ({ children }) => {
       }, 300);
     }
   };
+
+  const updateProfile = async () => {
+    const maxSize = 4 * 1024 * 1024; // 4MB
+    console.log("Image profile:", imageProfile);
+  
+    if (!imageProfile) {
+      return null; // Return null if no image is selected
+    }
+  
+    if (imageProfile.size > maxSize) {
+      setDetailsMessage('Selected Photo is too large. Please select a photo not more than 4MB.');
+      await new Promise(resolve => setTimeout(resolve, 4000));
+      setDetailsMessage(null);
+      return null; // Return null if image size is too large
+    }
+  
+    try {
+      const fileName = `${uuidv4()}_${imageProfile.name}`;
+      const imageRef = ref(storage, `Tribute-profile/${fileName}`);
+      await uploadBytes(imageRef, imageProfile);
+      const imgUrl = await getDownloadURL(imageRef);
+      return imgUrl; // Return the imgUrl if upload is successful
+    } catch (error) {
+      console.error('Error uploading profile image:', error);
+      return null; // Return null if there is an error
+    }
+  };
+  
   
 
   const uploadProfileFile = async () => {
@@ -128,7 +157,7 @@ export const GalleryProvider = ({ children }) => {
 
     let imgUrl;
     if (!imageProfile) {
-      imgUrl = 'https://firebasestorage.googleapis.com/v0/b/mama-comfort-tribute.appspot.com/o/Tribute-profile%2F1074c9f9-5d5a-4793-8c03-f27e2f66cbd7_m1.png?alt=media&token=30725b90-31a2-4723-9d9e-b1b6c3146bfa';
+      imgUrl = 'https://firebasestorage.googleapis.com/v0/b/mama-comfort-tribute.appspot.com/o/Tribute-profile%2F74706eb3-3bb8-452d-945d-1623e24a3527_Mama%20Comfort%20OyetejuN.png?alt=media&token=26c77613-99de-47b2-89b6-9d72eb556515';
       return imgUrl;
     }
 
@@ -140,7 +169,7 @@ export const GalleryProvider = ({ children }) => {
       }
 
     try {
-      let imgUrl = 'https://firebasestorage.googleapis.com/v0/b/mama-comfort-tribute.appspot.com/o/Tribute-profile%2F1074c9f9-5d5a-4793-8c03-f27e2f66cbd7_m1.png?alt=media&token=30725b90-31a2-4723-9d9e-b1b6c3146bfa';
+      let imgUrl = 'https://firebasestorage.googleapis.com/v0/b/mama-comfort-tribute.appspot.com/o/Tribute-profile%2F74706eb3-3bb8-452d-945d-1623e24a3527_Mama%20Comfort%20OyetejuN.png?alt=media&token=26c77613-99de-47b2-89b6-9d72eb556515';
   
       if (imageProfile != null) {
         const fileName = `${uuidv4()}_${imageProfile.name}`;
@@ -253,9 +282,12 @@ export const GalleryProvider = ({ children }) => {
     setDetailsMessage(null)
     setImageProPreview(null)
   }
+  const [disImg, setDisImg] = useState(null);
+  const [isPlayingg, setIsPlayingg] = useState(false);
+  const [showModal, setShowModal] = useState(true);
 
   return (
-    <GalleryContext.Provider value={{ imageUrls, uploadMessage, imagePreview, uploading, isClicked, imageProUrls, imageProPreview, isClickedd, Data, isOpen, photoDetails, detailsMessage, detailsMessagess, setPhotoDetails, handleImageUpload, handleProfileUpload, uploadProfileFile, uploadFile, viewImage, imgAction, togglePopdown, togglePopup }}>
+    <GalleryContext.Provider value={{ imageUrls, uploadMessage, imagePreview, uploading, isClicked, imageProUrls, imageProPreview, isClickedd, Data, isOpen, photoDetails, detailsMessage, detailsMessagess, disImg, isPlayingg, showModal, setShowModal, setIsPlayingg, setDisImg, updateProfile, setPhotoDetails, handleImageUpload, setImageProPreview, handleProfileUpload, uploadProfileFile, uploadFile, viewImage, imgAction, togglePopdown, togglePopup }}>
       {children}
     </GalleryContext.Provider>
   );
