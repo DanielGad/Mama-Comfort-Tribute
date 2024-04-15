@@ -45,9 +45,6 @@ const Gallery = () => {
   return (
     <>
     <ScrollToTop />
-      <Link to={"/add-gallery"}>
-        <button className={`add-image ${isClicked ? 'clicked' : ''}`} onClick={togglePopdown}>Add Photo</button>
-      </Link>
       {
       Data.img && <div className="preview" onClick={() => imgAction()}>
         <span className=" close-btn close" onClick={() => imgAction()}>&times;</span>
@@ -79,6 +76,9 @@ const Gallery = () => {
       </div>
       <div className='navi'>
         <button className='link-button' onClick={prevImages} disabled={currentPage === 0}>Previous</button>
+        <Link to={"/add-gallery"}>
+        <button className={`add-image ${isClicked ? 'clicked' : ''}`} onClick={togglePopdown}>Add Photo to Gallery</button>
+      </Link>
         <button className='link-button' onClick={nextImages} disabled={endIndex >= galleryDetails.length}>Next</button>
       </div>
     </>

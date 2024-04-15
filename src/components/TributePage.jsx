@@ -83,9 +83,9 @@ const TributePage = () => {
         <TributeModal tribute={editingTribute} onUpdate={handleUpdate} setOpenModal={setModalOpen} />}
       </div>
 
-      <Link to={'/tribute-form'}><button className={`add-image ${isClicked ? 'clicked' : ''}`} onClick={togglePopdown}>Add Tribute</button></Link>
       <div className='navi'>
         <button className='link-button' onClick={prevTributes} disabled={currentPage === 0}>Previous</button>
+        <Link to={'/tribute-form'}><button className={`add-image ${isClicked ? 'clicked' : ''}`} onClick={togglePopdown}>Add a Tribute</button></Link>
         <button className='link-button' onClick={nextTributes} disabled={endIndex >= tributess.length}>Next</button>
       </div>
     </div>

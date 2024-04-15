@@ -79,10 +79,6 @@
   text-align: center;
 }
 
-.preview-img {
-  position: relative;
-}
-
 .preview-info {
   width: 70%;
   background-color: rgb(31,26,44);
@@ -91,9 +87,9 @@
   border-radius: 10px;
   font-family: Roboto;
   font-size: large;
-  position: absolute;
-  bottom: -10%;
-  left: 10%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .close {
@@ -106,6 +102,7 @@
   border-radius: 50%;
   padding: 1% 2%;
   cursor: pointer;
+  z-index: 10;
 }
 
 .closee {
@@ -120,8 +117,7 @@
 }
 
 .add-image {
-  padding: 2% 5%;
-  position: fixed;
+  padding: 10px 20px;
   bottom: 70px;
   right: 20px;
   background-color: rgb(31, 26, 44);

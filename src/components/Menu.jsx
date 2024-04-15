@@ -34,17 +34,40 @@ const Menu = () => {
     }
   }
 
+  const [isTributeOpen, setIsTributeOpen] = useState(false);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+
+  const handleTributeClick = () => {
+    setIsTributeOpen(!isTributeOpen);
+    setIsGalleryOpen(false); 
+  };
+
+  const handleGalleryClick = () => {
+    setIsGalleryOpen(!isGalleryOpen);
+    setIsTributeOpen(false); 
+  };
+
   return (
     <div className='menu'>
       <Link to="/" style={{ textDecoration: 'none' }} aria-label="Go to Home">
         <div className='menu-button'>Home</div>
       </Link>
-      <Link to="/tributes" style={{ textDecoration: 'none' }} aria-label="View Tributes">
-        <div className='menu-button'>Tributes</div>
-      </Link>
-      <Link to="/gallery" style={{ textDecoration: 'none' }} aria-label="View Gallery">
-        <div className='menu-button'>Gallery</div>
-      </Link>
+      <div className="dropdown" onMouseEnter={handleTributeClick} onMouseLeave={() => setIsTributeOpen(false)}>
+        <Link to={"/tributes"} style={{textDecoration: "none"}}><div className='menu-button'>Tributes</div></Link>
+        {isTributeOpen && (
+          <div className="dropdown-content">
+            <Link to="/tribute-form" style={{ textDecoration: 'none' }}>Add a Tribute</Link>
+          </div>
+        )}
+      </div>
+      <div className="dropdown" onMouseEnter={handleGalleryClick} onMouseLeave={() => setIsGalleryOpen(false)}>
+        <Link to={"/gallery"} style={{textDecoration: "none"}}><div className='menu-button'>Gallery</div></Link>
+        {isGalleryOpen && (
+          <div className="dropdown-content">
+            <Link to="/add-gallery" style={{ textDecoration: 'none' }}>Add Photo to Gallery</Link>
+          </div>
+        )}
+      </div>
       {autoplayDenied && (
         <div className="menu-button sound" onClick={toggleMusic} aria-label={!isPlayingg ? 'Play' : 'Pause'}>
           {!isPlayingg ? <FontAwesomeIcon icon={faVolumeUp} /> : <FontAwesomeIcon icon={faVolumeOff} />}

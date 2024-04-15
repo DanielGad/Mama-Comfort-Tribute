@@ -113,7 +113,7 @@ const TributeBody = () => {
       </div>
       
 
-          {fullscreenImage && (
+          {fullscreenImage && 
       <div className="image-fullscreen" onClick={handleCloseFullscreen}>
         <img src={fullscreenImage.image} alt="Fullscreen Image" />
         <br />
@@ -122,7 +122,7 @@ const TributeBody = () => {
           &times;
         </span>
       </div>
-        )} 
+        } 
 
 <div className="tributes">
         <h1 style={{textAlign: "center", paddingTop: "20px"}}>Tributes</h1>
