@@ -1,7 +1,7 @@
 import { getFirestore, collection, getDocs, query, orderBy, doc, updateDoc } from 'firebase/firestore';
-import { Link } from 'react-router-dom';
-import { useContext, useState, useEffect } from 'react';
-import { GalleryContext } from './GalleryContext';
+// import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+// import { GalleryContext } from './GalleryContext';
 import '../assets/tributePage.css';
 import TributeModal from './TributeModal';
 
@@ -9,7 +9,7 @@ const database = getFirestore();
 const collectionRef = collection(database, 'Tribute');
 
 const TributePage = () => {
-  const { isClicked, togglePopdown } = useContext(GalleryContext);
+  // const { isClicked, togglePopdown } = useContext(GalleryContext);
   const [tributess, setTributes] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [editingTribute, setEditingTribute] = useState(null);
@@ -85,7 +85,7 @@ const TributePage = () => {
 
       <div className='navi'>
         <button className='link-button' onClick={prevTributes} disabled={currentPage === 0}>Previous</button>
-        <Link to={'/tribute-form'}><button className={`add-image ${isClicked ? 'clicked' : ''}`} onClick={togglePopdown}>Add a Tribute</button></Link>
+        {/* <Link to={'/tribute-form'}><button className={`add-image ${isClicked ? 'clicked' : ''}`} onClick={togglePopdown}>Add a Tribute</button></Link> */}
         <button className='link-button' onClick={nextTributes} disabled={endIndex >= tributess.length}>Next</button>
       </div>
     </div>

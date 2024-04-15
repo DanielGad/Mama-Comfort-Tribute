@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { getFirestore, collection, getDocs, query, orderBy, } from 'firebase/firestore';
 import { GalleryContext } from './GalleryContext';
 import '../assets/gallery.css';
@@ -12,7 +12,7 @@ const database = getFirestore();
 const collectionRef = collection(database, 'tributes-info');
 
 const Gallery = () => {
-  const { isClicked, Data, viewImage, imgAction, togglePopdown } = useContext(GalleryContext);
+  const { Data, viewImage, imgAction } = useContext(GalleryContext);
 
   const [galleryDetails, setGalleryDetails] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -76,9 +76,9 @@ const Gallery = () => {
       </div>
       <div className='navi'>
         <button className='link-button' onClick={prevImages} disabled={currentPage === 0}>Previous</button>
-        <Link to={"/add-gallery"}>
+        {/* <Link to={"/add-gallery"}>
         <button className={`add-image ${isClicked ? 'clicked' : ''}`} onClick={togglePopdown}>Add Photo to Gallery</button>
-      </Link>
+      </Link> */}
         <button className='link-button' onClick={nextImages} disabled={endIndex >= galleryDetails.length}>Next</button>
       </div>
     </>

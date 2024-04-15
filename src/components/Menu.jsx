@@ -47,6 +47,31 @@ const Menu = () => {
     setIsTributeOpen(false); 
   };
 
+  const closeDropdowns = () => {
+    setIsTributeOpen(false);
+    setIsGalleryOpen(false);
+  };
+
+  useEffect(() => {
+    const handleDocumentClick = (e) => {
+      if (!e.target.closest('.dropdown')) {
+        closeDropdowns();
+      }
+    };
+
+    const handleScroll = () => {
+      closeDropdowns();
+    };
+
+    document.body.addEventListener('click', handleDocumentClick);
+    document.body.addEventListener('scroll', handleScroll);
+
+    return () => {
+      document.body.removeEventListener('click', handleDocumentClick);
+      document.body.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <div className='menu'>
       <Link to="/" style={{ textDecoration: 'none' }} aria-label="Go to Home">
@@ -56,7 +81,7 @@ const Menu = () => {
         <Link to={"/tributes"} style={{textDecoration: "none"}}><div className='menu-button'>Tributes</div></Link>
         {isTributeOpen && (
           <div className="dropdown-content">
-            <Link to="/tribute-form" style={{ textDecoration: 'none' }}>Add a Tribute</Link>
+            <Link to="/tribute-form" style={{ textDecoration: 'none' }} onClick={closeDropdowns}>Add a Tribute</Link>
           </div>
         )}
       </div>
@@ -64,7 +89,7 @@ const Menu = () => {
         <Link to={"/gallery"} style={{textDecoration: "none"}}><div className='menu-button'>Gallery</div></Link>
         {isGalleryOpen && (
           <div className="dropdown-content">
-            <Link to="/add-gallery" style={{ textDecoration: 'none' }}>Add Photo to Gallery</Link>
+            <Link to="/add-gallery" style={{ textDecoration: 'none' }} onClick={closeDropdowns}>Add Photo to Gallery</Link>
           </div>
         )}
       </div>
