@@ -22,11 +22,11 @@ const Menu = () => {
       if (music.paused) {
         music.play();
         setIsPlaying(true);
-setIsPlayingg(false)
+setIsPlayingg(true)
       } else {
         music.pause();
         setIsPlaying(false);
-        setIsPlayingg(true)
+        setIsPlayingg(false)
       }
     } else {
       console.error('Background music not found.');
