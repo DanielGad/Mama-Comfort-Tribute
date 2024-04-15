@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 const Menu = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isPlayingg, setIsPlayingg] = useState(true);
+  const [isPlayingg, setIsPlayingg] = useState(false);
   const [autoplayDenied, setAutoplayDenied] = useState(false);
 
   useEffect(() => {
