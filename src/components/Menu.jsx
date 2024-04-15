@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 const Menu = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isPlayingg, setIsPlayingg] = useState(false);
+  const [isPlayingg, setIsPlayingg] = useState(true);
   const [autoplayDenied, setAutoplayDenied] = useState(false);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const Menu = () => {
         setAutoplayDenied(true);
       });
       setIsPlaying(true);
-setIsPlayingg(false)
+setIsPlayingg(true)
     }
   }, []);
   
@@ -23,11 +23,11 @@ setIsPlayingg(false)
       if (music.paused) {
         music.play();
         setIsPlaying(true);
-setIsPlayingg(false)
+setIsPlayingg(true)
       } else {
         music.pause();
         setIsPlaying(false);
-        setIsPlayingg(true)
+        setIsPlayingg(false)
       }
     } else {
       console.error('Background music not found.');
