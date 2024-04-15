@@ -16,6 +16,14 @@ body {
   background-color: aliceblue;
 }
 
+div, button, p, span {
+  user-select: none; /* Standard syntax */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  -webkit-user-select: none; /* Safari */
+  pointer-event: none;
+}
+
 .carousel {
   padding-top: 10px;
   margin-bottom: 10px;
