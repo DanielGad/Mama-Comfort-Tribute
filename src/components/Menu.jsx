@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react';
 
 const Menu = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isPlayingg, setIsPlayingg] = useState(true);
+  const [isPlayingg, setIsPlayingg] = useState(false);
   const [autoplayDenied, setAutoplayDenied] = useState(false);
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const music = document.getElementById('bg-music');
@@ -34,18 +33,16 @@ const Menu = () => {
     }
   }
 
-  function handlePermissionResponse(response) {
-    if (response === 'yes') {
-      setIsPlayingg(true);
-    } else {
-      // Handle if user declines permission
-    }
-    setShowModal(false);
-  }
-
   useEffect(() => {
     if (autoplayDenied) {
-      setShowModal(true);
+      const allowMusic = window.confirm('Permission required! Do you want to play music?');
+      if (allowMusic) {
+music.play();
+        setIsPlayingg(true);
+      } else {
+        music.pause();
+        setIsPlayingg(false);
+      }
     }
   }, [autoplayDenied]);
 
@@ -68,15 +65,6 @@ const Menu = () => {
       {!autoplayDenied && (
         <div className="menu-button" onClick={toggleMusic} aria-label={isPlaying ? 'Pause' : 'Play'}>
           {isPlayingg ? 'Pause' : 'Play'}
-        </div>
-      )}
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <p>Permission required! Do you want to play music?</p>
-            <button onClick={() => handlePermissionResponse('yes')}>Yes</button>
-            <button onClick={() => handlePermissionResponse('no')}>No</button>
-          </div>
         </div>
       )}
     </div>
