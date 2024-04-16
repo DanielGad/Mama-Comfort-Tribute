@@ -60,17 +60,19 @@ const Menu = () => {
         <div className='menu-button'>Home</div>
       </Link>
       <div className="dropdown" onMouseEnter={handleTributeClick} onMouseLeave={() => setIsTributeOpen(false)}>
-        <Link to={"/tributes"} style={{textDecoration: "none"}}><div className='menu-button'>Tributes</div></Link>
+        <div className='menu-button'>Tributes</div>
         {isTributeOpen && (
           <div className="dropdown-content">
+            <Link to="/tributes" style={{ textDecoration: 'none' }} onClick={closeDropdowns}>View Tributes</Link>
             <Link to="/tribute-form" style={{ textDecoration: 'none' }} onClick={closeDropdowns}>Add a Tribute</Link>
           </div>
         )}
       </div>
       <div className="dropdown" onMouseEnter={handleGalleryClick} onMouseLeave={() => setIsGalleryOpen(false)}>
-        <Link to={"/gallery"} style={{textDecoration: "none"}}><div className='menu-button'>Gallery</div></Link>
+        <div className='menu-button'>Gallery</div>
         {isGalleryOpen && (
           <div className="dropdown-content">
+            <Link to="/gallery" style={{ textDecoration: 'none' }} onClick={closeDropdowns}>View Gallery</Link>
             <Link to="/add-gallery" style={{ textDecoration: 'none' }} onClick={closeDropdowns}>Add Photo to Gallery</Link>
           </div>
         )}
