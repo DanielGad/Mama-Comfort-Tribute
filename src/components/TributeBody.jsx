@@ -53,7 +53,7 @@ const TributeBody = () => {
     slidesToShow: imageUrls.length > 1 ? 3 : 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 1500,
+    autoplaySpeed: 2500,
     responsive: [
       {
         breakpoint: 768,
