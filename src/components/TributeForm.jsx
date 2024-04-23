@@ -46,9 +46,9 @@ const TributeForm = ({ onSubmitted }) => {
   
   return (
     <div>
-      <Link to={"/tributes"}><span className="close-btn closee">
+  {/*<Link to={"/tributes"}><span className="close-btn closee">
             &times;
-          </span></Link>
+          </span></Link>*/}
       <form className="tribute-form" onSubmit={handleSubmit}>
       <div className='head'>Add a Tribute</div>
       <label htmlFor="body">Tribute:</label>
