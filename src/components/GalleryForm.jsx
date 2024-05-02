@@ -38,9 +38,9 @@ const GalleryForm = ({ onSubmitted }) => {
 
   return (
     <div className="upload-container">
-      <Link to={"/gallery"}><span className="close-btn closee">
+      {/*<Link to={"/gallery"}><span className="close-btn closee">
             &times;
-          </span></Link>
+          </span></Link>*/}
         <div className="upload">
       <div>
         <input

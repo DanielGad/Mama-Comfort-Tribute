@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import '../assets/tributeform.css';
 import { getFirestore, collection, addDoc, getDocs} from 'firebase/firestore';
 import { useContext } from 'react';
@@ -46,9 +46,9 @@ const TributeForm = ({ onSubmitted }) => {
   
   return (
     <div>
-      <Link to={"/tributes"}><span className="close-btn closee">
+  {/*<Link to={"/tributes"}><span className="close-btn closee">
             &times;
-          </span></Link>
+          </span></Link>*/}
       <form className="tribute-form" onSubmit={handleSubmit}>
       <div className='head'>Add a Tribute</div>
       <label htmlFor="body">Tribute:</label>
