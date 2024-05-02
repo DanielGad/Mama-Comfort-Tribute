@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { GalleryContext } from './GalleryContext';
 import {
   getFirestore,
   collection,
@@ -17,7 +16,6 @@ const collectionRef = collection(database, 'Tribute');
 const collectionReff = collection(database, 'tributes-info')
 
 const TributeBody = () => {
-  const { imageUrls } = useContext(GalleryContext);
 
   const [tributes, setTributes] = useState([]);
   const [tributesImg, setTributesImg] = useState([]);
@@ -50,7 +48,7 @@ const TributeBody = () => {
     // dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: imageUrls.length > 1 ? 3 : 1,
+    slidesToShow: tributesImg.length > 1 ? 3 : 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 1500,
@@ -103,7 +101,7 @@ const TributeBody = () => {
         <Slider {...settings} className='slider'>
           {tributesImg.slice(0, 6).map((pics, index) => (
             <div key={index} className='car-con'>
-              <img src={pics.imgUrl} alt={`Image ${index + 1}`} onClick={() => handleImageClick(pics.imgUrl, pics.info)} />
+              <img src={pics.imgUrl} alt={`Image ${index + 1}`} onClick={() => handleImageClick(pics.imgUrl, pics.info)} width={"50px"}/>
               <p>{pics.info}</p>
             </div>
           ))}
