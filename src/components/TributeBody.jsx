@@ -50,7 +50,7 @@ const TributeBody = () => {
     // dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: imageUrls.length > 1 ? 3 : 1,
+    slidesToShow: imageUrls.length > 1 ? 3 : 3,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2500,
